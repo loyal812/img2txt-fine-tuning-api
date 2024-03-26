@@ -1,0 +1,40 @@
+What is the purpose of an API in object-oriented languages?
+How does the Java language distribute its API libraries?
+What is the relationship between an API and a software library?
+How does a software framework differ from a traditional API?
+Can an API also be an implementation of a protocol? Explain.
+What is the difference between an API and a protocol?
+How does an API hide the details of a transport protocol?
+What is the role of protocols in allowing different technologies to exchange information?
+How does the quality of API documentation impact its ease of use?
+Can a class interface in an API have no methods? Explain.
+What is the purpose of an API?
+Name three Java APIs mentioned in the document.
+What is the difference between language binding and an API?
+What is the role of an interface generator in API development?
+How does Talend integrate its data management with BPM?
+What is the purpose of an ODBC in Microsoft Windows?
+Name two cross-platform APIs mentioned in the document.
+What is the significance of an API in multi-platform shared memory multiprocessing programming?
+How does SWIG facilitate language binding in API development?
+What is the role of F2PY in generating interfaces between Fortran and Python?
+What is an application programming interface (API) and what is its purpose?
+How does an API differ from an application binary interface (ABI)?
+What are some examples of API specifications?
+What is the difference between a language-dependent API and a language-independent API?
+How can a website use Google Maps' API to display restaurant reviews on a map?
+How is the term "API" used in different contexts?
+In procedural languages like C, how is an API typically used?
+Can you explain the concept of a function prototype in relation to an API?
+How are the behavior and usage of API functions typically documented?
+Can you explain the API described in the given context and its purpose?
+What is the purpose of an API in programming?
+How is API documentation typically provided in program development environments?
+What tools are available for accessing API documentation in Perl, Python, and Ruby?
+How is API documentation organized in Java and Microsoft languages?
+In object-oriented languages, what does an API typically include?
+How can the API be conceived in relation to class definitions and behaviors?
+What is the role of public methods in interacting with objects derived from class definitions?
+Can you provide an example of a class representing a Stack and its publicly exposed methods?
+How does an API facilitate the use of objects derived from class definitions?
+In the context of the provided information, what are the two publicly exposed methods of a Stack class?

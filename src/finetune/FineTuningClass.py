@@ -98,7 +98,7 @@ class FineTuningClass:
                         
                     print(f"Generated {len(questions)} questions")
                     
-                    with open(output_file, "w") as f:
+                    with open(output_file, "w", encoding='utf-8') as f:
                         for question in questions:
                             f.write(question + "\n")
 
@@ -112,7 +112,7 @@ class FineTuningClass:
                 
     def initial_eval(self):
         questions = []
-        with open(f'{self.data_path}/eval_questions.txt', "r") as f:
+        with open(f'{self.data_path}/eval_questions.txt', "r", encoding='utf-8') as f:
             for line in f:
                 questions.append(line.strip())
 
@@ -158,7 +158,7 @@ class FineTuningClass:
         )
 
         questions = []
-        with open(f'{self.data_path}/generated_data/train_questions.txt', "r") as f:
+        with open(f'{self.data_path}/generated_data/train_questions.txt', "r", encoding='utf-8') as f:
             for line in f:
                 questions.append(line.strip())
 
@@ -196,23 +196,24 @@ class FineTuningClass:
             while True:
                 print("Waiting for fine-tuning to complete...")
                 job_handle = openai.fine_tuning.jobs.retrieve(fine_tuning_job_id=job.id)
+                print(f"status: {job_handle.status}")
                 if job_handle.status == "succeeded":
                     print("Fine-tuning complete")
                     print("Fine-tuned model info", job_handle)
                     print("Model id", job_handle.fine_tuned_model)
 
-                    with open(f'{self.data_path}/generated_data/model.txt', "w") as f:
+                    with open(f'{self.data_path}/generated_data/model.txt', "w", encoding='utf-8') as f:
                         f.write(job_handle.fine_tuned_model + "\n")
                     
                     # Load the JSON data from the file
-                    with open(f'{self.data_path}/payload/chatting_payload.json', 'r') as file:
+                    with open(f'{self.data_path}/payload/chatting_payload.json', 'r', encoding='utf-8') as file:
                         payload = json.load(file)
 
                     # Update the model_id with specific data
                     payload['model_id'] = job_handle.fine_tuned_model
 
                     # Write the updated JSON back to the file
-                    with open(f'{self.data_path}/payload/chatting_payload.json', 'w') as file:
+                    with open(f'{self.data_path}/payload/chatting_payload.json', 'w', encoding='utf-8') as file:
                         json.dump(payload, file, indent=4)
 
                     return job_handle.fine_tuned_model
@@ -243,18 +244,18 @@ class FineTuningClass:
         #             print("Fine-tuned model info", job_handle)
         #             print("Model id", job_handle.fine_tuned_model)
 
-        #             with open(f'{self.data_path}/generated_data/model.txt', "w") as f:
+        #             with open(f'{self.data_path}/generated_data/model.txt', "w", encoding='utf-8') as f:
         #                 f.write(job_handle.fine_tuned_model + "\n")
                     
         #             # Load the JSON data from the file
-        #             with open(f'{self.data_path}/payload/chatting_payload.json', 'r') as file:
+        #             with open(f'{self.data_path}/payload/chatting_payload.json', 'r', encoding='utf-8') as file:
         #                 payload = json.load(file)
 
         #             # Update the model_id with specific data
         #             payload['model_id'] = job_handle.fine_tuned_model
 
         #             # Write the updated JSON back to the file
-        #             with open(f'{self.data_path}/payload/chatting_payload.json', 'w') as file:
+        #             with open(f'{self.data_path}/payload/chatting_payload.json', 'w', encoding='utf-8') as file:
         #                 json.dump(payload, file, indent=4)
 
         #             return job_handle.fine_tuned_model

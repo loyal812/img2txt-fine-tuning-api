@@ -7,17 +7,17 @@ What factors might influence the synchronization quality of the TCC implementati
 Why is background subtraction necessary when building applications for real usage?
 How does the network's focus on other motion features impact the distance in the latent space?
 What is the main factor causing the enormous distance in the latent space during the golf swing analysis?
-How does the density and radius of red spheres indicate the degree of joint position difference between the user's pose and the expert's pose?
-What is the title of the research paper mentioned in the context information?
-Who are the authors of the research paper?
-What is the main focus of the research paper?
-What is the purpose of the AI Golf tool mentioned in the context information?
-What are some of the techniques used in the AI Golf tool for self-training?
-How does the AI Golf tool enhance complex motor task learning?
-What is the significance of sonification and haptic feedback in the AI Golf tool?
-How does the Subtletee system augment posture awareness for beginner golfers?
-What is the role of the decayed dynamic time warping algorithm in the AR-based self-sports learning system?
-How does the AI Golf tool utilize deep learning techniques for swing analysis?
+How does the skeleton version provide more compressed and precise information compared to the video version?
+What is the title of the paper mentioned in the context information?
+Who are the authors of the paper?
+What is the file type of the document mentioned in the context information?
+When was the document last accessed?
+What is the research interest of Chen-Chieh Liao?
+Where did Dong-Hyun Hwang receive his Ph.D. degree from?
+What are the research interests of Hideki Koike?
+What is the volume number of the publication mentioned in the context information?
+What is the file size of the document mentioned in the context information?
+What is the creation date of the document?
 What is the purpose of the motion decoder in the AI Golf system?
 How is the intermediate motion between two points in the latent space retrieved?
 What are the four different conditions under which statistical analysis was conducted in the experimental setup?
@@ -25,9 +25,9 @@ How was the video dataset used in the study collected and processed?
 What is the significance of creating a video dataset without background information?
 How were 3D human pose datasets created for more precise analysis?
 What evaluation metric was used to measure the precision of alignment in the trained network?
-What is the key event and phase labeling used in the accuracy metric?
-How was the TCC loss used to train the network in the self-supervised learning method?
-What is the purpose of the SA-TCC model in the AI Golf system?
+What is the key event and phase labeling in the context of golf swing analysis?
+How many high-quality golf swing videos were included in the GolfDB dataset?
+What is the purpose of using Mask R-CNN in the video dataset processing?
 What is the main challenge addressed in the study of the AI Golf Swing Analysis Tool?
 How does the proposed system help users understand the differences between themselves and professional players?
 What is the significance of using an unsupervised learning method in the proposed approach?

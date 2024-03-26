@@ -1,5 +1,40 @@
-Question: What is the simplified form of the momentum equation for incompressible fluid, according to the provided context information?
-Question: What is the equation that completes the system of conservation equations for fluid dynamics, including the conservation of mass and momentum?
-Question: What are the three main difficulties associated with the Navier-Stokes equations?
-Question: What is the advantage of using the vorticity-velocity formulation in fluid dynamics?
-Question: What is the defining characteristic of an incompressible fluid according to the context information?
+What are the two equations needed for the conservation of mass and momentum in fluid dynamics?
+What is the total energy in fluid dynamics and how is it calculated?
+How is the conservation of energy equation simplified for incompressible flow?
+What additional relation is needed for compressible flow between pressure and density?
+What are the Navier-Stokes equations for incompressible, viscous, and Newtonian fluid?
+How is the momentum equation in the Navier-Stokes equations normalized?
+What is the simplified form of the Navier-Stokes equations for constant mass density?
+What is the purpose of non-dimensionalization in fluid dynamics?
+How does the momentum equation change after non-dimensionalization?
+What is the significance of the Reynolds number in fluid dynamics?
+What are the types of fluid mentioned in the context information?
+Define an incompressible fluid and provide an example.
+What is an ideal fluid and what is unique about its surface force?
+Explain the concept of an isentropic fluid and provide an example.
+Differentiate between a Newtonian fluid and a non-Newtonian fluid.
+What is a homogeneous fluid and how does it relate to the conservation of mass?
+Provide a brief overview of the Navier-Stokes equations and their significance in fluid dynamics.
+What are some recommended resources for further reading on fluid mechanics?
+Explain the concept of a streamline and how it differs from a path line.
+Discuss the physical and geometric meaning of vorticity in fluid dynamics.
+What is the condition for a fluid to be considered incompressible?
+How is the continuity equation simplified for incompressible flow?
+What is the significance of the Jacobian for incompressible fluid?
+How can the integration and derivative be exchanged in the case of incompressible fluid?
+What is the conservation of momentum equation for a fluid?
+What is the force acting on a domain in the context of fluid dynamics?
+State the theorem that provides the formula for the change of momentum.
+How can the transport theorem be used to calculate the change of momentum?
+What is the significance of the cancellation of the last two terms in the proof of the transport theorem?
+What is the equation for the change of momentum in terms of the fluid's velocity and acceleration?
+What are the basic equations for fluid dynamics?
+Explain the difference between Eulerian and Lagrangian coordinates.
+How is the Eulerian coordinate described in relation to fluid flow?
+How is the Lagrangian coordinate described in relation to fluid flow?
+What is the purpose of the reference coordinate in the Lagrangian description?
+How is the flow map defined in the context of fluid dynamics?
+What is the significance of the identity map in the flow map?
+What assumptions are made about the smoothness of the flow map?
+How is the Navier-Stokes equation derived for incompressible fluids?
+What are the conservation laws involved in fluid dynamics?
