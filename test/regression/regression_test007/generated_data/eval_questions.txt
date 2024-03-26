@@ -1,0 +1,40 @@
+What is the purpose of the "join" method in Python strings?
+How can you check if a specific substring is present in a given string?
+What are some common string methods in Python?
+How can you format a string using the "%" operator in Python?
+What is the difference between old school string formatting and new string formatting in Python?
+How can you create a nested list in Python?
+What is the purpose of list comprehensions in Python?
+How can you iterate over a list and access both the index and the item?
+How can you search for a specific value in a list and retrieve its index?
+What are some common list methods in Python?
+What is the purpose of decorators in Python? Provide an example of how decorators can be used to transform existing code.
+Explain the concept of inheritance in Python. Give an example of a class that inherits from a base class.
+How can getters and setters be implemented in Python? Provide an example using the property function.
+What are magic methods in Python? List some examples of commonly used magic methods and explain their purpose.
+How does the __str__ method differ from the __repr__ method in Python? When are these methods called?
+What is the purpose of the __eq__ and __ne__ methods in Python? How do they affect the behavior of the == and != operators?
+Explain the concept of container length in Python. How can the __len__ method be used to determine the length of a container?
+What is the purpose of the __getitem__ and __setitem__ methods in Python? How are they used to access and modify elements in a container?
+How does the __getattr__ method work in Python? When is it called and what is its purpose?
+Describe the role of the __delattr__ method in Python. When is it called and how does it affect the deletion of attributes?
+What is the recommended indentation level in Python?
+How can code blocks be delineated in Python?
+What are the naming conventions for identifiers, functions, and class methods in Python?
+What are the basic object types in Python?
+How can a statement be split across multiple lines in Python?
+What are the different types of operators in Python?
+How can modules be imported and used in Python?
+What is the purpose of the datetime module in Python?
+What is the purpose of the os module in Python?
+What is the purpose of the numpy module in Python?
+What is the purpose of the magic method __iter__() in Python?
+Explain the difference between an iterable object and an iterator.
+How can generators be more space or time efficient compared to iterating over a list?
+What is the purpose of the yield statement in a generator function?
+What is the limitation of using a yield statement in the try clause of a try/finally construct?
+How can you create a generator expression from a list comprehension?
+What is the difference between a method and an attribute in Python?
+How can you access an attribute of an object in Python?
+Explain the concept of static methods in Python.
+What is the purpose of the self argument in class methods?

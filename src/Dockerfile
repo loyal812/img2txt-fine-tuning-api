@@ -1,5 +1,5 @@
 # Dockerfile for api service
-FROM python:latest as base
+FROM python:3.11.0 as base
 
 # Define a build argument named PROJECT with a default value of 'api'.
 ARG PROJECT=src
@@ -23,6 +23,7 @@ USER root
 # Copy the requirements.txt file and install the Python dependencies.
 COPY --chown=user:user ./requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade llama-index
 
 # Copy the project files into the container.
 COPY --chown=user:user ./$PROJECT /home/user/$PROJECT
@@ -42,6 +43,7 @@ FROM base as test
 # Copy the requirements.txt file and install the Python dependencies.
 COPY --chown=user:user ./requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade llama-index
 
 USER root
 # Copy the project files into the container.
