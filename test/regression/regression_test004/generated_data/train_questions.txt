@@ -1,5 +1,40 @@
-Question: What are the two types of coordinate systems used to describe fluid flow in the context of the Navier-Stokes equations?
-Question: What is the relationship between the Lagrangian and Eulerian coordinates in the context of fluid dynamics?
-Question: What is the formula for the material derivative of an integral in the Eulerian coordinate system?
-Question: What is the equation that represents the conservation of mass in fluid dynamics, as derived in the given context?
-Question: What is the condition for a fluid to be considered incompressible?
+What is the relationship between flow with the same Reynolds number and domains with the same shape?
+How can an experiment in a lab be used to model flow in large scales?
+What happens to the Navier-Stokes equation as the Reynolds number increases?
+What is the difference between the Navier-Stokes equation and the Euler equation?
+What are the boundary conditions for the Euler equation?
+What are the three difficulties associated with the Navier-Stokes equations?
+Why is stability in time a potential issue for the Navier-Stokes equations?
+How does the nonlinearity of the Navier-Stokes equations affect numerical computation?
+Why is the divergence free condition difficult to impose in numerical methods?
+What is the Lagrangian formulation of the Navier-Stokes equations and when is it useful?
+What is the formula used to calculate the change in the integral of a function with respect to τ in the reference domain?
+How is the conservation of mass principle in classical mechanics defined?
+What is the equation that represents the conservation of mass in the Eulerian coordinate system?
+How is the mass of a fluid parcel inside a deformed domain expressed?
+What is the surface integral of flux used to describe the change of mass in a domain in the Eulerian coordinate system?
+How does the mass conservation equation differ between the Lagrangian and Eulerian coordinate systems?
+What is the significance of the negative sign in the surface integral of flux equation?
+How does the shape of a fluid parcel change in relation to the fluid flow?
+What are the variables denoted by (ρ,u) in the context of fluid dynamics?
+How does the conservation of mass equation relate to the continuity equation?
+What is the physical meaning of the material derivative in fluid dynamics?
+Define Lagrangian coordinate and Eulerian coordinate in the context of fluid dynamics.
+How is the material derivative of an integral in Eulerian coordinate related to the change of the domain?
+What is the Jacobi matrix and Jacobian in the context of fluid flow?
+Prove the formula for the material derivative of the Jacobian using the Jacobi matrix and the divergence of the velocity field.
+Explain the relationship between the change in volume of a domain and the volume of the band in the context of fluid dynamics.
+Derive the algebraic version of the formula for the material derivative of the Jacobian.
+State and explain the Transport Theorem I in fluid dynamics.
+How can the Transport Theorem I be used to calculate the material derivative of a smooth function?
+Derive the formula for the material derivative of an integral using the Transport Theorem I and the divergence of the velocity field.
+What is the equation for the Bernoulli (or dynamic) pressure in the Navier-Stokes equations for fluid dynamics?
+What is the advantage of using the vorticity-velocity formulation in describing the dynamics of a flow?
+In the vorticity-stream function formulation, what are the equations for the vorticity and the stream function?
+How can the boundary condition u=0 on ∂Ω be transformed in the vorticity-stream function formulation?
+What is the vorticity-velocity-stream function formulation used for in three-dimensional incompressible flow?
+What is the condition required for the vector function A in the vorticity-velocity-stream function formulation to eliminate the freedom of the solution?
+What is the equation for the vorticity in the vorticity-velocity-stream function formulation of the Navier-Stokes equations?
+How is the tangential boundary condition of u imposed in the vorticity-velocity-stream function formulation?
+What is the identity used to rewrite the momentum equation in the Navier-Stokes equations?
+What is the equation for the convection-diffusion equation in the vorticity-stream function formulation?

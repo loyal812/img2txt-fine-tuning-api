@@ -1,18 +1,18 @@
+What are the three types of flow control statements mentioned in the document?
+How can you exit a for or while loop in Python?
 What is the purpose of the "pass" statement in Python?
-How does the "continue" statement affect loop iterations in Python?
-Explain the difference between the "for" and "while" loop control structures in Python.
-What is a ternary statement in Python? Provide an example.
-How are exceptions used for flow control in Python? Provide an example.
-What is the difference between an assertion error and an attribute error in Python?
-How can you raise a custom error in Python? Provide an example.
-Explain the concept of truthiness in Python. How can you determine the truth status of an object?
-What is the difference between mutable and immutable objects in Python? Provide examples of each.
-How can you compare ranges of values in Python? Provide an example.
-What is a Python set and how is it different from a list or a dictionary?
+What are some common exceptions in Python and why do they occur?
+How do you raise an error in Python using the "raise" statement?
+What is the difference between objects and identifiers in Python?
+Which Python objects are considered immutable and which are considered mutable?
+How can you determine the truth status of an object in Python?
+What is the purpose of the __nonzero__() magic method in Python?
+How can you compare ranges of values in Python using comparison operators?
+What is the purpose of a Python set and how is it different from a list or dictionary?
 How can you create an empty set in Python?
 Explain the concept of set comprehensions in Python with an example.
 Can a set in Python contain mutable objects? Why or why not?
-How do you iterate over a set in Python?
+How do you iterate over the items in a set in Python?
 How can you check if an item is present in a set in Python?
 What are some common set methods in Python and what do they do?
 What is a frozenset in Python and how is it different from a regular set?
@@ -20,21 +20,21 @@ Explain the concept of a dictionary in Python and how it is different from a set
 How can you merge two dictionaries in Python?
 What is the purpose of the `abs()` function in Python?
 How does the `all()` function work in Python?
-Explain the functionality of the `bytearray()` function in Python.
+Explain the use of the `bytearray()` function in Python.
 What does the `callable()` function determine in Python?
-How can the `divmod()` function be used to obtain both the quotient and remainder of a division operation?
-Describe the purpose of the `enumerate()` function in Python.
-What is the difference between the `getattr()` and `hasattr()` functions in Python?
-How does the `map()` function work in Python? Provide an example.
-Explain the concept of closures in Python and provide an example.
-How can the `sorted()` function be used to obtain a new sorted list in Python?
+How does the `divmod()` function work in Python?
+Describe the functionality of the `enumerate()` function in Python.
+What is the purpose of the `filter()` function in Python?
+Explain the use of the `getattr()` function in Python.
+How does the `map()` function work in Python?
+Describe the functionality of the `sorted()` function in Python.
 What is the purpose of the "pass" statement in Python?
 How does the "continue" statement affect loop iterations in Python?
 Explain the difference between the "for" and "while" loop control structures in Python.
 What is a ternary statement in Python? Provide an example.
-How are exceptions used for flow control in Python? Provide an example.
-What is the difference between an assertion error and an attribute error in Python?
-How can you raise a custom error in Python? Provide an example.
-Explain the concept of truthiness in Python. How can you determine the truth status of an object?
-What is the difference between mutable and immutable objects in Python? Provide examples of each.
-How can you compare ranges of values in Python? Provide an example.
+How can exceptions be handled in Python using the "try-except" block?
+List three common exceptions in Python and briefly explain why they occur.
+How can errors be raised in Python using the "raise" statement?
+What is the difference between objects and variables in Python?
+Explain the concept of truthiness in Python and provide examples of objects that are considered "truthy" and "falsy".
+How can tuples be used in Python to achieve the swap variable idiom?

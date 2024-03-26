@@ -1,0 +1,40 @@
+What is the purpose of adaptation libraries when using APIs in different languages?
+How can object APIs and protocols be used to transfer information between different platforms?
+Explain the process of marshalling and unmarshalling objects in remote language invocations.
+How does API sharing and reuse work in virtual machine environments?
+Define Web APIs and their role in web development.
+What is the difference between SOAP-based services and REST-style communications in web APIs?
+How do web APIs enable the creation of mashup applications?
+Give an example of how content can be shared and dynamically posted using APIs.
+How can user information be shared from web communities to outside applications using open APIs?
+Provide examples of platforms that utilize open APIs for sharing user data.
+What is the purpose of an API in computer programming?
+How does a compatible API differ from the POSIX standard API?
+How does Microsoft ensure backward compatibility in their Windows API?
+How does Apple handle compatibility and API implementation in their systems?
+What challenges exist in standardizing APIs for Unix-like operating systems?
+What is the Linux Standard Base and what is its goal?
+What are the two options for releasing an API and what are the advantages of each?
+What legal issue arose between Oracle and Google regarding the Java API?
+What is the ruling on the copyrightability of APIs?
+Can you provide examples of different APIs mentioned in the document?
+What is the file type of the document?
+When was the document last accessed?
+Provide an external link to a guide on designing a good API.
+What is the file size of the document?
+What is the creation date of the document?
+Provide an external link to a resource on writing an API.
+What is the file name of the document?
+Provide an external link to a resource on API trading.
+What is the page label of the document?
+When was the document last modified?
+What is the file type of the document mentioned in the context information?
+When was the document last accessed?
+How many contributors are listed for the article sources and contributors?
+What is the file size of the document?
+What is the creation date of the document?
+What is the file path of the document?
+What is the page label of the document?
+What is the file name of the document?
+What is the last modified date of the document?
+What is the source of the article mentioned in the context information?
