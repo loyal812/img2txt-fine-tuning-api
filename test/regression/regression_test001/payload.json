@@ -4,7 +4,13 @@
         "https://assets.hongkiat.com/uploads/ww-sunset-wallpapers/preview/sunset-desktop-wallpaper-1.jpg",
         "https://assets.hongkiat.com/uploads/ww-sunset-wallpapers/preview/sunset-desktop-wallpaper-3.jpg"
     ],
+    "mathpix_app_id": null,
+    "mathpix_app_key": null,
+    "is_gpt": true,
     "language_model": "gpt-4",
+    "is_parallel": true,
+    "parallel_count": 5,
     "backend_prompt": "Can you revise this response for me?",
-    "continue_conversation": true
+    "continue_conversation": true,
+    "merge_prompt": "These are several times image to text function's results about the same image. I want to get the best result. Please merge these results, then let me know the only one result."
 }

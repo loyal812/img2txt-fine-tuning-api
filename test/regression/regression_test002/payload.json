@@ -1,7 +1,13 @@
 {
     "api_key": null,
+    "mathpix_app_id": null,
+    "mathpix_app_key": null,
+    "is_gpt": true,
     "image_url": [],
     "language_model": "gpt-4",
+    "is_parallel": false,
+    "parallel_count": 5,
     "backend_prompt": "Can you convert this output to a latex file?",
-    "continue_conversation": true
+    "continue_conversation": true,
+    "merge_prompt": "These are several times image to text function's results about the same image. I want to get the best result. Please merge these results, then let me know the only one result."
 }

@@ -1,5 +1,6 @@
 {
     "api_key": null,
+    "parent_path": "./test/regression/regression_test005",
     "data_path": "./test/regression/regression_test005",
     "model": "gpt-3.5-turbo",
     "temperature": 0.3,

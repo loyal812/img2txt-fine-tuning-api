@@ -18,15 +18,16 @@ from ragas.metrics import answer_relevancy, faithfulness
 from dotenv import load_dotenv
 
 class FineTuningClass:
-    def __init__(self, data_path, api_key='', model='gpt-3.5-turbo', temperature=0.3, max_retries=5):
+    def __init__(self, data_path, parent_path, api_key='', model='gpt-3.5-turbo', temperature=0.3, max_retries=5):
         self.data_path = data_path
+        self.parent_path = parent_path
         self.model = model
         self.temperature = temperature
         self.max_retries = max_retries
         self.retry_delay = 60
         self.set_api_key(api_key)
         self.set_document(data_path)
-        self.generate_subfolder(data_path)
+        self.generate_subfolder(parent_path)
 
     def set_api_key(self, api_key):
         if api_key:
@@ -49,13 +50,17 @@ class FineTuningClass:
 
 
     def set_document(self, data_path):
-        self.documents = SimpleDirectoryReader(
-            data_path
-        ).load_data()
+        try:
+            self.documents = SimpleDirectoryReader(data_path).load_data()
+        except Exception:
+            # Handle the case when the data_path does not exist
+            print(f"The specified data path '{data_path}' does not exist or is inaccessible.")
+            exit()
 
-    def generate_subfolder(self, data_path):
+
+    def generate_subfolder(self, parent_path):
         subfolder_name = "generated_data"
-        subfolder_path = os.path.join(data_path, subfolder_name)
+        subfolder_path = os.path.join(parent_path, subfolder_name)
         os.makedirs(subfolder_path, exist_ok=True)
 
     def train_generation(self):
@@ -102,8 +107,8 @@ class FineTuningClass:
                         for question in questions:
                             f.write(question + "\n")
 
-                generate_and_save_questions(self.documents[:half_point], f'{self.data_path}/generated_data/train_questions.txt', 40)
-                generate_and_save_questions(self.documents[half_point:], f'{self.data_path}/generated_data/eval_questions.txt', 40)
+                generate_and_save_questions(self.documents[:half_point], f'{self.parent_path}/generated_data/train_questions.txt', 40)
+                generate_and_save_questions(self.documents[half_point:], f'{self.parent_path}/generated_data/eval_questions.txt', 40)
 
                 break
             except Exception as e:
@@ -112,7 +117,7 @@ class FineTuningClass:
                 
     def initial_eval(self):
         questions = []
-        with open(f'{self.data_path}/eval_questions.txt', "r", encoding='utf-8') as f:
+        with open(f'{self.parent_path}/generated_data/eval_questions.txt', "r", encoding='utf-8') as f:
             for line in f:
                 questions.append(line.strip())
 
@@ -158,7 +163,7 @@ class FineTuningClass:
         )
 
         questions = []
-        with open(f'{self.data_path}/generated_data/train_questions.txt', "r", encoding='utf-8') as f:
+        with open(f'{self.parent_path}/generated_data/train_questions.txt', "r", encoding='utf-8') as f:
             for line in f:
                 questions.append(line.strip())
 
@@ -173,13 +178,13 @@ class FineTuningClass:
             # Handle the exception here, you might want to log the error or take appropriate action
             print(f"An error occurred: {e}")
         finally:
-            finetuning_handler.save_finetuning_events(f'{self.data_path}/generated_data/finetuning_events.jsonl')
+            finetuning_handler.save_finetuning_events(f'{self.parent_path}/generated_data/finetuning_events.jsonl')
 
         
     def finetune(self):
 
         # new version
-        file_upload = openai.files.create(file=open(f'{self.data_path}/generated_data/finetuning_events.jsonl', "rb"), purpose="fine-tune")
+        file_upload = openai.files.create(file=open(f'{self.parent_path}/generated_data/finetuning_events.jsonl', "rb"), purpose="fine-tune")
         print("Uploaded file id", file_upload.id)
 
         while True:
@@ -202,18 +207,29 @@ class FineTuningClass:
                     print("Fine-tuned model info", job_handle)
                     print("Model id", job_handle.fine_tuned_model)
 
-                    with open(f'{self.data_path}/generated_data/model.txt', "w", encoding='utf-8') as f:
+                    with open(f'{self.parent_path}/generated_data/model.txt', "w", encoding='utf-8') as f:
                         f.write(job_handle.fine_tuned_model + "\n")
                     
                     # Load the JSON data from the file
-                    with open(f'{self.data_path}/payload/chatting_payload.json', 'r', encoding='utf-8') as file:
+                    with open(f'{self.parent_path}/payload/chatting_payload.json', 'r', encoding='utf-8') as file:
                         payload = json.load(file)
 
                     # Update the model_id with specific data
                     payload['model_id'] = job_handle.fine_tuned_model
 
                     # Write the updated JSON back to the file
-                    with open(f'{self.data_path}/payload/chatting_payload.json', 'w', encoding='utf-8') as file:
+                    with open(f'{self.parent_path}/payload/chatting_payload.json', 'w', encoding='utf-8') as file:
+                        json.dump(payload, file, indent=4)
+
+                    # Load the JSON data from the file
+                    with open(f'{self.parent_path}/payload/payload.json', 'r', encoding='utf-8') as file:
+                        payload = json.load(file)
+
+                    # Update the model_id with specific data
+                    payload['model_id'] = job_handle.fine_tuned_model
+
+                    # Write the updated JSON back to the file
+                    with open(f'{self.parent_path}/payload/payload.json', 'w', encoding='utf-8') as file:
                         json.dump(payload, file, indent=4)
 
                     return job_handle.fine_tuned_model

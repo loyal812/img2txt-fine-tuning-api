@@ -20,3 +20,5 @@ ragas
 datasets
 docx2txt
 cryptography
+poppler-utils
+PyMuPDF

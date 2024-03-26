@@ -1,0 +1,34 @@
+The image is a page from a BSD Library Functions Manual, under the section ARCHIVE_ENTRY_MISC (3), which pertains to functions used for manipulating properties of `archive_entry`, a structure representing an entry within an archive in a Unix or Unix-like operating system. The functions detailed are `archive_entry_symlink_type` and `archive_entry_set_symlink_type`, which are part of the Streaming Archive Library. 
+
+For inclusion in a C or C++ program, the directive `#include <archive_entry.h>` is used. `archive_entry_symlink_type()` returns the type of the symbolic link stored in an archive entry and `archive_entry_set_symlink_type()` sets this type. These functions have particular relevance on operating systems that support multiple symbolic link types, such as Microsoft Windows.
+
+The supported symbolic link types are:
+- `AE_SYMLINK_TYPE_UNDEFINED` - Default on Unix systems or when the symlink target type is not defined. 
+- `AE_SYMLINK_TYPE_FILE` - Symbolic link points to a file.
+- `AE_SYMLINK_TYPE_DIRECTORY` - Symbolic link points to a directory.
+
+In the "SEE ALSO" section, references to other related manual pages such as `archive_entry(3)`, `archive_entry_paths(3)`, `archive_entry_stat(3)`, and `libarchive(3)` are given.
+
+The page is part of the Berkeley Software Distribution (BSD) documentation and is last updated or written on "April 15, 2019."
+The image demonstrates a page from a BSD (Berkeley Software Distribution) manual showcasing the documentation for specific functions in the Streaming Archive Library (libarchive, -larchive), relating to reading encrypted archives. The functions listed are:
+
+1. `archive_read_add_passphrase(struct archive *, const char *passphrase)`: This function is utilized to register passphrases for reading an encrypted archive. It notes that it will return `ARCHIVE_FAILED` when the given passphrase is either NULL or empty, otherwise the return value will be `ARCHIVE_OK`.
+
+2. `archive_read_set_passphrase_callback(struct archive *, void *client_data, archive_passphrase_callback *)`: This function allows setting a callback that will be summoned to provide a passphrase for decryption after all previously registered passphrases failed. It requires a struct archive pointer, client data pointer, and the callback function as its arguments.
+
+The manual also lists the header file (`<archive.h>`) required to declare these functions and provides a comprehensive description of each function, including the possible return values (`ARCHIVE_OK` for successful executions and `ARCHIVE_FAILED` for unsuccessful attempts).
+
+In addition, there is a "SEE ALSO" section which cites other related manual pages like `tar(1)`, `archive_read(3)`, `archive_read_set_options(3)`, and `libarchive(3)`, providing additional information or related functionalities. 
+
+The document was last updated or probably compiled on September 14, 2014, and the BSD at the footer may refer to the type of license or distribution conditions under which this software library is released.
+The image is a screenshot of a page from the BSD (Berkeley Software Distribution) Library Functions Manual, specifically describing the `archive_read_new` function. This function is part of the Streaming Archive Library, also known as libarchive or `-larchive`, and is used for reading streaming archives.
+
+The manual page includes several sections:
+
+- NAME: The name of the function `archive_read_new`.
+- LIBRARY: The library that the function is part of, which is the Streaming Archive Library.
+- SYNOPSIS: Here the `#include` directive for `archive.h` and the prototype of the function are shown. It provides the declaration for the function `archive_read_new` which returns a pointer to `struct archive`.
+- DESCRIPTION: This section explains the purpose of the function, which allocates and initializes a `struct archive` object suitable for reading from an archive. If there is an error, `NULL` is returned.
+- SEE ALSO: This section references related manual pages for further information, such as `tar(1)`, `archive_read_data(3)`, `archive_read_filter(3)`, `archive_read_format(3)`, `archive_read_set_options(3)`, `archive_util(3)`, `libarchive(3)`, and `tar(5)`.
+
+The footer of the document mentions that it belongs to the BSD operating system and the date is February 2, 2012, indicating the last modification of this manual page.
