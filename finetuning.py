@@ -17,6 +17,7 @@ def run_fine_tuning(args):
     # Call class instance
     fine_tune = FineTuningClass(
         data_path=payload_data["data_path"],
+        parent_path=payload_data["parent_path"],
         api_key=payload_data["api_key"],
         model=payload_data["model"],
         temperature=payload_data["temperature"],

@@ -1,0 +1,20 @@
+{
+    "data_path": "./test/regression/regression_test010",
+    "pdf_data_path": "./test/regression/regression_test010/pdf",
+    "images_data_path": "./test/regression/regression_test010/images",
+    "train_data_path": "./test/regression/regression_test010/train_data",
+    "threasold_image_percent_of_pdf": 50,
+    "api_key": null,
+    "mathpix_app_id": null,
+    "mathpix_app_key": null,
+    "is_gpt": true,
+    "image_url": [],
+    "language_model": "gpt-4",
+    "is_parallel": true,
+    "parallel_count": 5,
+    "merge_prompt": "These are several times image to text function's results about the same image. I want to get the best result. Please merge these results, then let me know the only one result.",
+    "model": "gpt-3.5-turbo",
+    "model_id": "",
+    "temperature": 0.3,
+    "max_retries": 5
+}

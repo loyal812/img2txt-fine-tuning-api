@@ -1,0 +1,40 @@
+What is the purpose of the "archive_read_add_passphrase" function?
+How can passphrases be registered for reading an encrypted archive?
+What will happen if the passphrase provided is NULL or empty?
+What is the return value of the "archive_read_add_passphrase" function?
+How can a passphrase callback function be registered?
+When will the passphrase callback function be invoked?
+What other functions are related to reading encrypted archives?
+What is the library used for streaming archive operations?
+What is the significance of the "archive.h" header file?
+What is the creation date and last modified date of the file "archive_read_add_passphrase.3.pdf"?
+What is the purpose of the `archive_entry_symlink_type` function in the Streaming Archive Library?
+How can the `archive_read_add_passphrase` function be used to read an encrypted archive?
+What is the return value of the `archive_read_new` function if there is an error?
+Which header file needs to be included to declare the `archive_read_set_passphrase_callback` function?
+What are the supported symbolic link types in the Streaming Archive Library?
+What is the role of the `archive_entry_set_symlink_type` function in manipulating properties of `archive_entry`?
+What is the significance of the `AE_SYMLINK_TYPE_UNDEFINED` symbolic link type on Unix systems?
+How can a callback function be set for providing a passphrase for decryption using the `archive_read_set_passphrase_callback` function?
+What are some related manual pages referenced in the "SEE ALSO" section of the BSD Library Functions Manual?
+When was the BSD Library Functions Manual last updated or written?
+What is the formula for the position vector of a line in three-dimensional space?
+How can the parametric equations for a line be derived from the position vector formula?
+What is the symmetric equation for a line that passes through the point (2,4,-3) and is parallel to the vector 3i - 2j + 5k?
+How can the vector equation for a line be obtained from the parametric equations?
+What are the parametric equations for a line that passes through points A(1,3,-2) and B(4,1,5)?
+How can the vector equation for a line be derived from the position vectors of two points on the line?
+What is the significance of the highlighted sections in the notes?
+How can the equations for a line in three-dimensional space be used to solve geometric problems?
+What information is missing from the scanned pages of handwritten notes?
+How can the direction vector of a line be determined from the given equations?
+What is the purpose of the "archive_read_add_passphrase" function?
+How can passphrases be registered for reading an encrypted archive?
+What will happen if the passphrase provided is NULL or empty?
+What is the return value of the "archive_read_add_passphrase" function?
+How can a passphrase callback function be registered?
+When will the passphrase callback function be invoked?
+What other functions are related to reading encrypted archives?
+What is the library used for streaming archive operations?
+What is the significance of the "archive.h" header file?
+What is the creation date of the file "archive_read_add_passphrase.3.pdf"?

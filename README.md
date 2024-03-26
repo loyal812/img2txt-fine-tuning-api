@@ -41,3 +41,13 @@ py .\chatting.py --payload_dir="./test/regression/regression_testxxx/payload/cha
 ```
 
 You will see the result at console.
+
+
+### Full process: data preprocessing -> pdf to image -> image to text -> fine tuning
+Please install requirement again.
+
+```
+pip install -r requirements.txt
+
+py main.py
+```

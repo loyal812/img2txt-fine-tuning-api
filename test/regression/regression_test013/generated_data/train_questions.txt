@@ -1,0 +1,40 @@
+What is the purpose of the archive_read_new function?
+What library is the archive_read_new function a part of?
+How do you include the archive.h header file in your code?
+What does the archive_read_new function return if there is an error?
+Where can you find a complete description of the struct archive object?
+What other functions are related to reading data from an archive?
+What other functions are related to filtering data from an archive?
+What other functions are related to the format of an archive?
+What function can be used to set options for reading an archive?
+What other manual pages are related to the archive library?
+What is the purpose of the "archive_entry_symlink_type" function?
+How can the type of a symbolic link be set using the "archive_entry_set_symlink_type" function?
+What are the supported values for the type of a symbolic link?
+On which operating systems do the functions "archive_entry_symlink_type" and "archive_entry_set_symlink_type" have special meaning?
+What is the default symbolic link target type on Unix systems?
+What library is required to use the "archive_entry_symlink_type" and "archive_entry_set_symlink_type" functions?
+What other functions are related to the manipulation of properties of archive entries?
+What is the purpose of the "archive_entry_paths" function?
+What is the purpose of the "archive_entry_stat" function?
+What is the purpose of the "libarchive" library?
+What is the purpose of the archive_read_new function?
+What library is the archive_read_new function a part of?
+How do you include the archive.h header file in your code?
+What does the archive_read_new function return if there is an error?
+Where can you find a complete description of the struct archive object?
+What other functions are related to reading data from an archive?
+What other functions are related to filtering data from an archive?
+What other functions are related to the format of an archive?
+What function can be used to set options for reading an archive?
+What other manual pages are related to the archive library?
+What is the purpose of the "archive_entry_symlink_type" function?
+How can the type of a symbolic link be set using the "archive_entry_set_symlink_type" function?
+What are the supported values for the type of a symbolic link?
+On which operating systems do the functions "archive_entry_symlink_type" and "archive_entry_set_symlink_type" have special meaning?
+What is the default symbolic link target type on Unix systems?
+What library is required to use the "archive_entry_symlink_type" and "archive_entry_set_symlink_type" functions?
+What other functions are related to the manipulation of properties of archive entries?
+What is the purpose of the "archive_entry_paths" function?
+What is the purpose of the "archive_entry_stat" function?
+What is the purpose of the "libarchive" library?

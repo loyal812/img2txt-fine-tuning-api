@@ -1,0 +1,12 @@
+{
+    "api_key": null,
+    "mathpix_app_id": null,
+    "mathpix_app_key": null,
+    "data_path": "./test/regression/regression_test005",
+    "images_data_path": "./test/regression/regression_test005/images",
+    "image_url": [],
+    "language_model": "gpt-4",
+    "is_parallel": true,
+    "parallel_count": 5,
+    "merge_prompt": "These are several times image to text function's results about the same image. I want to get the best result. Please merge these results, then let me know the only one result."
+}
