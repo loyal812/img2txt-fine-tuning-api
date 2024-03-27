@@ -17,10 +17,7 @@
     "model_id": "ft:gpt-3.5-turbo-0613:personal::8ZmyxMfe",
     "temperature": 0.3,
     "max_retries": 5,
-    "mongodb_username": "scarlett1130",
-    "mongodb_password": "4zv2NnaSbKIWMRPv",
-    "mongodb_cluster_name": "cluster0.ill5gnu",
-    "mongodb_database_name": "",
+    "mongo_uri": null,
     "db_name": "oridosai",
     "collection_name": "apis"
 }

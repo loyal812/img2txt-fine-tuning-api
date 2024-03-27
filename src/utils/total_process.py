@@ -2,9 +2,7 @@
 import os
 import gc
 import time
-import argparse
 from pathlib import Path
-from urllib.parse import quote_plus
 import concurrent.futures
 from datetime import datetime
 import json
@@ -24,18 +22,8 @@ def total_process(args):
     
     payload_data = read_json(args['payload_dir'])
 
-    # Your MongoDB Atlas connection details
-    mongodb_username = payload_data["mongodb_username"]
-    mongodb_password = payload_data["mongodb_password"]
-    mongodb_cluster_name = payload_data["mongodb_cluster_name"]
-    mongodb_database_name = payload_data["mongodb_database_name"]
-
-    # Escape the mongodb_username and mongodb_password
-    mongodb_escaped_username = quote_plus(mongodb_username)
-    mongodb_escaped_password = quote_plus(mongodb_password)
-
     # Construct the MongoDB Atlas URI
-    mongo_uri = f"mongodb+srv://{mongodb_escaped_username}:{mongodb_escaped_password}@{mongodb_cluster_name}.mongodb.net/{mongodb_database_name}"
+    mongo_uri = payload_data["mongo_uri"]
 
     # Call class instance
     mongodb = MongoDBClass(
