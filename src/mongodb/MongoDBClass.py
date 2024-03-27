@@ -1,4 +1,3 @@
-import openai
 import re
 import os
 import datetime
@@ -9,6 +8,8 @@ from dotenv import load_dotenv
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 from pymongo import MongoClient
+
+from src.models.api_model import APIModel
 
 class MongoDBClass():
     def __init__(self, db_name, collection_name, mongo_uri=""):
@@ -62,4 +63,38 @@ class MongoDBClass():
                 # create the database
                 client[self.db_name].create_collection(self.collection_name)
                 print(f"The {self.db_name} database has been created with {self.collection_name} collection.")
-                return {"result": True, "message": f"The {self.db_name} database has been created with {self.collection_name} collection."}
+
+                # confirm apis collection exist
+                oridosai_db = client[self.db_name]
+                collist = oridosai_db.list_collection_names()
+                if self.collection_name in collist:
+                    print(f"The {self.collection_name} collection exists.")
+                    user_col = oridosai_db[self.collection_name]
+                    return {"result": True, "message": user_col}
+                else:
+                    print(f"The {self.collection_name} collection not exists.")
+                    return {"result": False ,"message": f"The {self.collection_name} collection not exists."}
+                
+                # return {"result": True, "message": f"The {self.db_name} database has been created with {self.collection_name} collection."}
+    
+    def create_api(self, data:APIModel):
+        # Connect to MongoDB
+        db = self.mongo_connect()
+
+        if db["result"] == True:
+            collection = db['message']
+
+            # Insert the new document into the collection
+            result = collection.insert_one(data)
+
+            # Check if the insertion was successful
+            if result.inserted_id:
+                print("New item has been added to the collection with ID:", result.inserted_id)
+                return True
+            else:
+                print("Failed to add a new item to the collection")
+                return False
+        else:
+            return db 
+        
+        

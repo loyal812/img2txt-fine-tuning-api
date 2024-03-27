@@ -1,6 +1,11 @@
 import os
 import shutil
 import fitz  # PyMuPDF
+import secrets
+
+def generate_api_key():
+    api_key = secrets.token_urlsafe(32)  # Generate a 32-byte (256-bit) random URL-safe API key
+    return api_key
 
 def is_image_file(file_path):
     image_extensions = {'.jpg', '.jpeg', '.png'}
