@@ -147,7 +147,7 @@ def total_process(args):
     else:
         print("invalide api key")
 
-        return {"status": "success", "message": "invalide api key"}
+        return {"status": "failed", "message": "invalide api key"}
 
 
 def save_to_txt(payload_data, result: str):

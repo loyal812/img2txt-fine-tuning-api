@@ -16,9 +16,10 @@ from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 from starlette.status import HTTP_201_CREATED
 
-from src.models.main_model import MainModel
+from src.models.basic_model import BasicModel
 from src.models.create_api_model import CreateAPIModel
 from src.models.chatting_model import ChattingModel
+from src.models.main_model import MainModel
 
 from utils.total_process import total_process
 from utils.create_api import create_api_key
@@ -68,8 +69,57 @@ def get_payload_dir(data_id: str):
 
     return payload_dir
 
+@app.post("/total")
+async def total(request_body: MainModel):
+    print("jeere")
+    payload_dir  = get_payload_dir(request_body.data_id)
+    
+    if request_body.user == "":
+        user = "user@gmail.com"
+    else:
+        user = request_body.user
+
+    args = {
+        'payload_dir' : payload_dir,
+        'user' : user,
+        'title' : request_body.title,
+        'description' : request_body.description,
+        'question': request_body.question
+    }
+
+    result_create_api = create_api_key(args)
+
+    if result_create_api['status'] == 'success':
+        print(result_create_api)
+
+        args = {
+            'payload_dir' : payload_dir,
+            'user' : user,
+            'title' : request_body.title,
+            'description' : request_body.description,
+            'question': request_body.question,
+            "api_key": result_create_api['api_key']
+        }
+
+        result_finetuning = total_process(args)
+
+        if result_finetuning['status'] == 'success':
+            print(result_finetuning)
+
+            result_chatting = chatting(args)
+            print(result_chatting)
+
+            return result_chatting
+        else:
+            print(result_finetuning)
+            return result_finetuning
+    else:
+        print(result_create_api)
+        return result_create_api
+
+
 @app.post("/finetuning")
-async def finetuning(request_body: MainModel):
+async def finetuning(request_body: BasicModel):
     payload_dir  = get_payload_dir(request_body.data_id)
 
     if request_body.user == "":
@@ -115,7 +165,7 @@ async def create_api(request_body: CreateAPIModel):
 
 
 @app.post("/delete_api")
-async def delete_api(request_body: MainModel):
+async def delete_api(request_body: BasicModel):
     payload_dir  = get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
@@ -140,7 +190,7 @@ async def delete_api(request_body: MainModel):
 
 
 @app.post("/check_api")
-async def check_api(request_body: MainModel):
+async def check_api(request_body: BasicModel):
     payload_dir  = get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
