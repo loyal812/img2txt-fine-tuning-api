@@ -1,7 +1,4 @@
-
-import os
 import gc
-import argparse
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import quote_plus

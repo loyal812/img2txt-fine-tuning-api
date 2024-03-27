@@ -3,9 +3,10 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 from src.utils.read_json import read_json
+from src.chatting.ChattingClass import ChattingClass
 from src.mongodb.MongoDBClass import MongoDBClass
 
-def delete_api_key(args):
+def chatting(args):
     """
     main entry point
     """
@@ -32,6 +33,20 @@ def delete_api_key(args):
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
 
-    mongodb.delete_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
+    is_available = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
+
+    if is_available:
+        print("valid api key")
+        # Call class instance
+        chatting = ChattingClass(
+            data_path=payload_data["data_path"],
+            api_key=payload_data["api_key"],
+            model_id=payload_data["model_id"],
+            temperature=payload_data["temperature"])
+            
+        response = chatting.ask_question(args['question'])
+        print(response)
+    else:
+        print("invalide api key")
 
     gc.collect()
