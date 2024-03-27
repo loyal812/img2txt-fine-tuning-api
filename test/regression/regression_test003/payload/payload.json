@@ -16,5 +16,8 @@
     "model": "gpt-3.5-turbo",
     "model_id": "ft:gpt-3.5-turbo-0613:personal::8Yk6D8wc",
     "temperature": 0.3,
-    "max_retries": 5
+    "max_retries": 5,
+    "mongo_uri": null,
+    "db_name": "oridosai",
+    "collection_name": "apis"
 }
