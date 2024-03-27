@@ -9,32 +9,36 @@ from src.mongodb.MongoDBClass import MongoDBClass
 
 def chatting(args):
     """
-    main entry point
+    Main entry point for the chatting process
+    Args:
+        args: Command line arguments
     """
 
-    # Payload
+    # Load payload data from the provided directory
     payload_data = read_json(args.payload_dir)
 
-    # Construct the MongoDB Atlas URI
+    # Extract MongoDB URI from payload data
     mongo_uri = payload_data["mongo_uri"]
 
-    # Call class instance
+    # Create an instance of MongoDBClass for database operations
     mongodb = MongoDBClass(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
 
+    # Check if the API key is valid using MongoDB
     is_available = mongodb.check_validation_api(api_key=str(Path(args.api_key)), user=str(Path(args.user)))
 
     if is_available:
         print("valid api key")
-        # Call class instance
+        # Initialize the ChattingClass instance for conversation
         chatting = ChattingClass(
             data_path=payload_data["data_path"],
             api_key=payload_data["api_key"],
             model_id=payload_data["model_id"],
             temperature=payload_data["temperature"])
-            
+
+        # Ask a question using the ChattingClass instance and get the response  
         response = chatting.ask_question(args.question)
         print(response)
     else:
@@ -43,12 +47,10 @@ def chatting(args):
     gc.collect()
 
 if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
+    # Clean up buffer memory before starting the program
     gc.collect()
 
+    # Default values for command line arguments
     # Current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -60,13 +62,13 @@ if __name__ == "__main__":
     user = "user@gmail.com"
     api_key = "AMEYbpdcmrUxNu_Fb80qutukUZdlsmYiH4g7As5LzNA1"
 
-    # Add options
-    p = argparse.ArgumentParser()
+    # Set up command line argument parser
     p = argparse.ArgumentParser(description="Conversational Agent.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
+    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="Data directory")
     p.add_argument("--question", type=str)
-    p.add_argument("--user", type=Path, default=user, help="user")
-    p.add_argument("--api_key", type=Path, default=api_key, help="title")
+    p.add_argument("--user", type=Path, default=user, help="User Email")
+    p.add_argument("--api_key", type=Path, default=api_key, help="API key")
     args = p.parse_args()
 
+    # Call the chatting function with the parsed arguments
     chatting(args)

@@ -6,10 +6,21 @@ import os
 
 class Pdf2ImgClass:
     def __init__(self, data_path, parent_path):
+        """Initialize Pdf2ImgClass with data and parent paths.
+
+        Args:
+        - data_path (str): The path where the PDF files are located.
+        - parent_path (str): The parent directory path for storing image outputs.
+        """
         self.data_path = data_path
         self.parent_path = parent_path
 
     def get_poppler_path(self):
+        """Retrieve the path to the directory containing pdftoppm executable.
+
+        Returns:
+        - pathlib.Path: Path to the directory containing pdftoppm, or None if not found.
+        """
         pdftoppm_path = shutil.which("pdftoppm")
         if pdftoppm_path:
             return pathlib.Path(pdftoppm_path).parent
@@ -17,6 +28,11 @@ class Pdf2ImgClass:
             return None
         
     def get_pdf_list(self):
+        """Retrieve the list of PDF files in the data directory.
+
+        Returns:
+        - list: List of paths to the PDF files.
+        """
         pdf_files = []
         try:
             pdf_files = [f for f in os.listdir(self.data_path) if f.endswith('.pdf')]
@@ -32,6 +48,7 @@ class Pdf2ImgClass:
             return []
 
     def pdf2img(self):
+        """Convert each PDF file in the list to a series of images."""
         pdf_list = self.get_pdf_list()
 
         for index, pdf_path in enumerate(pdf_list):

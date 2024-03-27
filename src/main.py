@@ -58,7 +58,9 @@ parent_dir = os.path.dirname(current_dir)
 async def root():
     return RedirectResponse(app.docs_url)
 
+# Function to get the payload directory
 def get_payload_dir(data_id: str):
+    """Get the directory path for the payload file."""
     payload_name = "payload.json"
     if data_id == "":
         test_name  = "regression_test013"
@@ -71,7 +73,6 @@ def get_payload_dir(data_id: str):
 
 @app.post("/total")
 async def total(request_body: MainModel):
-    print("jeere")
     payload_dir  = get_payload_dir(request_body.data_id)
     
     if request_body.user == "":

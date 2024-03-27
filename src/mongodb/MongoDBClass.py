@@ -8,11 +8,19 @@ from src.models.api_model import APIModel
 
 class MongoDBClass():
     def __init__(self, db_name, collection_name, mongo_uri=""):
+        """Initialize the MongoDBClass with the database and collection names.
+
+        Args:
+        - db_name (str): Name of the MongoDB database.
+        - collection_name (str): Name of the collection within the database.
+        - mongo_uri (str, optional): MongoDB connection URI.
+        """
         self.db_name = db_name
         self.collection_name = collection_name
         self.set_mongo_uri()
 
     def set_mongo_uri(self):
+        """Set the MongoDB connection URI using environment variables."""
         load_dotenv()
         mongodb_username = os.getenv("MONGODB_USERNAME")
         mongodb_password = os.getenv("MONGODB_PASSWORD")
@@ -21,13 +29,14 @@ class MongoDBClass():
         mongodb_escaped_username = quote_plus(mongodb_username)
         mongodb_escaped_password = quote_plus(mongodb_password)
 
-        # Construct the MongoDB Atlas URI
+        # Extract MongoDB URI from payload data
         mongo_uri = f"mongodb+srv://{mongodb_escaped_username}:{mongodb_escaped_password}@{mongodb_cluster_name}.mongodb.net"
 
         self.mongo_uri = mongo_uri
 
 
     def mongo_connect(self):
+        """Connect to the MongoDB server and database, and get the specified collection."""
         try:
             # mongo config
             print(self.mongo_uri)
@@ -114,7 +123,8 @@ class MongoDBClass():
     #             # return {"result": True, "message": f"The {self.db_name} database has been created with {self.collection_name} collection."}
     
     def create_api(self, data:APIModel):
-        # Connect to MongoDB
+        """Create a new API document in the collection."""
+        # Connect to MongoDB and get the collection
         db = self.mongo_connect()
 
         if db["result"] == True:
@@ -134,7 +144,8 @@ class MongoDBClass():
             return {"status": "failed", "message": "Failed to add a new item to the collection"}
         
     def delete_api(self, api_key, user):
-        # Connect to MongoDB
+        """Soft delete an API document based on the API key and user."""
+        # Connect to MongoDB and get the collection
         db = self.mongo_connect()
 
         if db["result"] == True:
@@ -157,7 +168,8 @@ class MongoDBClass():
             return {"status": "failed", "message": "No matching document found"}
         
     def check_validation_api(self, api_key, user):
-        # Connect to MongoDB
+        """Check if an API document exists and is not soft deleted."""
+        # Connect to MongoDB and get the collection
         db = self.mongo_connect()
 
         if db["result"] == True:

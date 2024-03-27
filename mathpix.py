@@ -84,12 +84,10 @@ def mathpix(args):
 
 
 if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
+    # Clean up buffer memory before starting the program
     gc.collect()
 
+    # Default values for command line arguments
     # Current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -98,10 +96,9 @@ if __name__ == "__main__":
     payload_name = "img2txt_payload.json"
     payload_dir  = os.path.join(current_dir, "test", "regression", test_name, "payload", payload_name)
 
-    # Add options
-    p = argparse.ArgumentParser()
+    # Set up command line argument parser
     p = argparse.ArgumentParser(description="Convert image to text using MathPIX API.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
+    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="Data directory")
     args = p.parse_args()
 
     mathpix(args)

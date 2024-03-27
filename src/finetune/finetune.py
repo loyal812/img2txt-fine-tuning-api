@@ -3,8 +3,7 @@ from dotenv import load_dotenv
 import openai
 import time
 
-# Set your API key
-
+# Set up the OpenAI API key from environment variables
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
@@ -18,11 +17,14 @@ else:
     os.environ["OPENAI_API_KEY"] = "your_default_api_key"
     openai.api_key = "openai_api_key"
 
+# Define the path to the data
 data_path = "./test/regression/regression_test003"
 
+# Upload file for fine-tuning
 file_upload = openai.files.create(file=open(f'{data_path}/generated_data/finetuning_events.jsonl', "rb"), purpose="fine-tune")
 print("Uploaded file id", file_upload.id)
 
+# Check status of the file processing
 while True:
     print("Waiting for file to process...")
     file_handle = openai.files.retrieve(file_id=file_upload.id)
@@ -31,7 +33,7 @@ while True:
         break
     time.sleep(3)
 
-
+# Initiate fine-tuning job and monitor the progress
 try:
     job = openai.fine_tuning.jobs.create(training_file=file_upload.id, model="gpt-3.5-turbo")
 
