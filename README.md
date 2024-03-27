@@ -84,3 +84,136 @@ py .\check_api_key.py --payload_dir="./test/regression/regression_testxxx/payloa
     "db_name": "oridosai",
     "collection_name": "apis"
 }
+
+### AWS EC2
+
+- Launch Instance
+![Alt text](./images/image.png)
+
+- Instance Setting
+![Alt text](./images/image-1.png)
+
+![Alt text](./images/image-2.png)
+
+![Alt text](./images/image-3.png)
+
+![Alt text](./images/image-4.png)
+
+![Alt text](./images/image-5.png)
+
+- Elastic IP Setting
+![Alt text](./images/image-7.png)
+
+![Alt text](./images/image-8.png)
+
+![Alt text](./images/image-9.png)
+
+![Alt text](./images/image-10.png)
+
+![Alt text](./images/image-11.png)
+
+- Security Group Setting
+![Alt text](./images/image-12.png)
+
+![Alt text](./images/image-13.png)
+
+![Alt text](./images/image-14.png)
+
+![Alt text](./images/image-15.png)
+
+- Connect to Instance
+![Alt text](./images/image-16.png)
+
+![Alt text](./images/image-17.png)
+
+### Project Setting
+```
+sudo su
+apt update
+
+apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+apt-cache policy docker-ce
+apt install docker-ce
+
+apt install docker-compose
+
+apt install make
+
+apt install nginx
+
+cd /var/www
+
+git clone https://github.com/oridosai/img2txt-fine-tuning-api.git
+
+cd img2txt-fine-tuning-api
+
+chmod -R 777 /var/www/img2txt-fine-tuning-api
+
+nano .env
+
+Please copy your local env data at this file and save.
+
+OPENAI_API_KEY=
+MATHPIX_APP_ID=
+MATHPIX_APP_KEY=
+Mongo_URI=
+
+docker-compose up -d
+```
+
+### done 
+host your elastic ip 
+
+http://{your elastic ip}:5000/create_api 
+POST
+```
+{
+  "user": "",
+  "title": "",
+  "description": "",
+  "data_id": ""
+}
+```
+
+http://{your elastic ip}:5000/delete_api 
+POST
+```
+{
+  "api_key": "",
+  "user": "",
+  "data_id": ""
+}
+```
+
+http://{your elastic ip}:5000/check_api 
+POST
+```
+{
+  "api_key": "",
+  "user": "",
+  "data_id": ""
+}
+```
+
+http://{your elastic ip}:5000/finetuning 
+POST
+```
+{
+  "api_key": "",
+  "user": "",
+  "data_id": ""
+}
+```
+
+http://{your elastic ip}:5000/conversation 
+POST
+```
+{
+  "api_key": "",
+  "user": "",
+  "data_id": "",
+  "question": "hi"
+}
+```
