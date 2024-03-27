@@ -19,6 +19,16 @@ from dotenv import load_dotenv
 
 class FineTuningClass:
     def __init__(self, data_path, parent_path, api_key='', model='gpt-3.5-turbo', temperature=0.3, max_retries=5):
+        """Initialize the FineTuningClass.
+
+        Args:
+        - data_path (str): The path to the data for fine-tuning.
+        - parent_path (str): The parent directory path.
+        - api_key (str, optional): OpenAI API key. If not provided, it will be loaded from the environment variables.
+        - model (str, optional): The OpenAI model to use for fine-tuning.
+        - temperature (float, optional): A parameter for controlling the randomness of the model's output.
+        - max_retries (int, optional): The maximum number of retries for fine-tuning operations.
+        """
         self.data_path = data_path
         self.parent_path = parent_path
         self.model = model
@@ -50,6 +60,11 @@ class FineTuningClass:
 
 
     def set_document(self, data_path):
+        """Load documents from the specified data directory.
+
+        Args:
+        - data_path (str): Path to the data directory.
+        """
         try:
             self.documents = SimpleDirectoryReader(data_path).load_data()
         except Exception:
@@ -59,21 +74,37 @@ class FineTuningClass:
 
 
     def generate_subfolder(self, parent_path):
+        """Generate a subfolder for storing generated data.
+
+        Args:
+        - parent_path (str): The parent directory path.
+        """
         subfolder_name = "generated_data"
         subfolder_path = os.path.join(parent_path, subfolder_name)
         os.makedirs(subfolder_path, exist_ok=True)
 
     def train_generation(self):
+        """
+        Generate and save questions for training and evaluation.
+
+        This method generates questions using the provided context and saves
+        them to separate files for training and evaluation.
+
+        Raises:
+        - Exception: If an error occurs during question generation.
+        """
         for attempt in range(1, self.max_retries + 1):
             try:
                 half_point = len(self.documents) // 2  # Get the index for the halfway point of the documents
                 random.seed(42)
                 random.shuffle(self.documents)
 
+                # Initialize the OpenAI model and context
                 gpt_35_context = ServiceContext.from_defaults(
                     llm=OpenAI(model=self.model, temperature=self.temperature)
                 )
 
+                # Define the query for question generation
                 question_gen_query = (
                     "You are a Teacher/ Professor. Your task is to setup "
                     "a quiz/examination. Using the provided context, formulate "
@@ -82,6 +113,14 @@ class FineTuningClass:
                 )
 
                 def generate_and_save_questions(documents, output_file, num_questions):
+                    """
+                    Generate and save questions to a file.
+
+                    Args:
+                    - documents (list): List of documents for question generation.
+                    - output_file (str): Output file path for saving the questions.
+                    - num_questions (int): Number of questions to generate.
+                    """
                     dataset_generator = DatasetGenerator.from_documents(
                         documents,
                         question_gen_query=question_gen_query,
@@ -116,6 +155,7 @@ class FineTuningClass:
                 time.sleep(self.retry_delay * attempt)
                 
     def initial_eval(self):
+        """Perform initial evaluation based on the generated questions and answers."""
         questions = []
         with open(f'{self.parent_path}/generated_data/eval_questions.txt', "r", encoding='utf-8') as f:
             for line in f:
@@ -130,6 +170,7 @@ class FineTuningClass:
             self.documents, service_context=gpt_35_context
         )
 
+        # Perform query to retrieve the contexts and answers for the generated questions
         query_engine = index.as_query_engine(similarity_top_k=2)
         contexts = []
         answers = []
@@ -140,7 +181,7 @@ class FineTuningClass:
             answers.append(str(response))
 
 
-        # initial eval
+        # Create a dataset from the questions, answers, and contexts
         ds = Dataset.from_dict(
             {
                 "question": questions,
@@ -149,25 +190,33 @@ class FineTuningClass:
             }
         )
 
+        # Evaluate the dataset using specific metrics and print the result
         result = evaluate(ds, [answer_relevancy, faithfulness])
         print(result)
 
     def jsonl_generation(self):
+        """
+        Generate JSONL file for fine-tuning events and perform model refinement.
+        """
+        # Initialize OpenAI FineTuningHandler and CallbackManager
         finetuning_handler = OpenAIFineTuningHandler()
         callback_manager = CallbackManager([finetuning_handler])
 
+        # Create a ServiceContext for the GPT-4 model with refined context window
         gpt_4_context = ServiceContext.from_defaults(
             llm=OpenAI(model="gpt-4", temperature=self.temperature),
             context_window=2048,  # limit the context window artifically to test refine process
             callback_manager=callback_manager,
         )
 
+        # Load questions for fine-tuning from a file
         questions = []
         with open(f'{self.parent_path}/generated_data/train_questions.txt', "r", encoding='utf-8') as f:
             for line in f:
                 questions.append(line.strip())
 
         try:
+            # Generate responses to the questions using GPT-4 and save the fine-tuning events to a JSONL file
             index = VectorStoreIndex.from_documents(
                 self.documents, service_context=gpt_4_context
             )
@@ -178,15 +227,20 @@ class FineTuningClass:
             # Handle the exception here, you might want to log the error or take appropriate action
             print(f"An error occurred: {e}")
         finally:
+            # Save the fine-tuning events to a JSONL file
             finetuning_handler.save_finetuning_events(f'{self.parent_path}/generated_data/finetuning_events.jsonl')
 
         
     def finetune(self):
-
-        # new version
+        """
+        Initiate the fine-tuning process and update model information.
+        """
+        # Create a file upload for the fine-tuning events JSONL file
+        # new version openai >= 1.1.0
         file_upload = openai.files.create(file=open(f'{self.parent_path}/generated_data/finetuning_events.jsonl', "rb"), purpose="fine-tune")
         print("Uploaded file id", file_upload.id)
 
+        # Wait for the file to be processed before initiating fine-tuning
         while True:
             print("Waiting for file to process...")
             file_handle = openai.files.retrieve(file_id=file_upload.id)
@@ -196,6 +250,7 @@ class FineTuningClass:
             time.sleep(3)
 
         try:
+            # Initiate the fine-tuning job and monitor the process until completion
             job = openai.fine_tuning.jobs.create(training_file=file_upload.id, model=self.model)
 
             while True:
@@ -237,7 +292,7 @@ class FineTuningClass:
         except Exception as e:
             print(f"An error occurred during fine-tuning: {e}")
 
-        # # old version
+        # # old version openai < 1.1.0
         # file_upload = openai.File.create(file=open(f'{self.data_path}/generated_data/finetuning_events.jsonl', "rb"), purpose="fine-tune")
         # print("Uploaded file id", file_upload.id)
 

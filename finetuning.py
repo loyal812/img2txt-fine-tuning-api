@@ -8,13 +8,16 @@ from src.finetune.FineTuningClass import FineTuningClass
 
 def run_fine_tuning(args):
     """
-    main entry point
+    Main function to execute the fine-tuning process using the provided payload.
+
+    Args:
+    - args (argparse.Namespace): Parsed command-line arguments
     """
 
-    # Payload
+    # Load payload data from a JSON file
     payload_data = read_json(args.payload_dir)
     
-    # Call class instance
+    # Create an instance of FineTuningClass to handle the fine-tuning process
     fine_tune = FineTuningClass(
         data_path=payload_data["data_path"],
         parent_path=payload_data["parent_path"],
@@ -32,15 +35,14 @@ def run_fine_tuning(args):
     # Fine tuning
     fine_tune.finetune()
 
+    # Perform garbage collection to free up memory
     gc.collect()
 
 if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
+    # Clean up buffer memory before starting the program
     gc.collect()
 
+    # Default values for command line arguments
     # Current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -49,10 +51,10 @@ if __name__ == "__main__":
     payload_name = "finetuning_payload.json"
     payload_dir  = os.path.join(current_dir, "test", "regression", test_name, "payload", payload_name)
 
-    # Add options
-    p = argparse.ArgumentParser()
+    # Set up command line argument parser
     p = argparse.ArgumentParser(description="Fine tuning.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
+    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="Data directory")
     args = p.parse_args()
 
+    # Call the run_fine_tuning function with the parsed arguments
     run_fine_tuning(args)

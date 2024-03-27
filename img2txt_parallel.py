@@ -14,7 +14,10 @@ from src.utils.chatgpt_communicator import ChatGPTCommunicator
 
 def main(args):
     """
-    main entry point
+    The main entry point for the image to text conversion process.
+
+    Args:
+    - args (argparse.Namespace): Parsed command-line arguments
     """
     # Timer
     start_time = time.time()
@@ -26,7 +29,7 @@ def main(args):
     image_data_path = payload_data["images_data_path"]
     image_list = [img for img in os.listdir(image_data_path) if img.endswith(".png") or img.endswith(".jpeg") or img.endswith(".jpg")]
 
-    # Call class instance
+    # Create an instance of ImageTranslator for image encoding and translation
     img_translator = ImageTranslator(api_key=payload_data["api_key"])
     
     # Loop over number of images and append all images
@@ -76,6 +79,13 @@ def main(args):
     gc.collect()
 
 def save_to_txt(payload_data, result: str):
+    """
+    Save the result to a text file.
+
+    Args:
+    - payload_data (dict): Payload data
+    - result (str): The result to be saved
+    """
     current_time = datetime.now().strftime('%y_%m_%d_%H_%M_%S')
     train_path = os.path.join(payload_data["data_path"], "train_data")
     os.makedirs(train_path, exist_ok=True)  # This line will create the directory if it doesn't exist
@@ -84,6 +94,16 @@ def save_to_txt(payload_data, result: str):
         f.write(result + "\n\n")  # Append the new data to the end of the file
 
 def img2txt(img_translator: ImageTranslator, image):
+    """
+    Process image to text using the ImageTranslator instance.
+
+    Args:
+    - img_translator (ImageTranslator): Instance of ImageTranslator
+    - image (str): Image data
+
+    Returns:
+    - str: Translated text from the image
+    """
     max_retries = 5
     last_error = ""
 
@@ -115,6 +135,16 @@ def img2txt(img_translator: ImageTranslator, image):
     return img_translator_response
 
 def make_one_result(payload_data, results: [str]):
+    """
+    Combine and process the results using ChatGPT.
+
+    Args:
+    - payload_data (dict): Payload data
+    - results (list): List of results from image processing
+
+    Returns:
+    - str: Final result after processing with ChatGPT
+    """
     response = payload_data["merge_prompt"]
     for index, result in enumerate(results):
         response += f"\nresult {index + 1}: {result}"
@@ -147,12 +177,10 @@ def make_one_result(payload_data, results: [str]):
     return chatgpt_response
 
 if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
+    # Clean up buffer memory before starting the program
     gc.collect()
 
+    # Default values for command line arguments
     # Current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -161,10 +189,9 @@ if __name__ == "__main__":
     payload_name = "img2txt_payload.json"
     payload_dir  = os.path.join(current_dir, "test", "regression", test_name, "payload", payload_name)
 
-    # Add options
-    p = argparse.ArgumentParser()
-    p = argparse.ArgumentParser(description="Translate text within an image.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
+    # Set up command line argument parser
+    p = argparse.ArgumentParser(description="Image to Text with parallel.")
+    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="Data directory")
     args = p.parse_args()
 
     main(args)

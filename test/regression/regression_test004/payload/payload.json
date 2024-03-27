@@ -3,7 +3,7 @@
     "pdf_data_path": "./test/regression/regression_test004/pdf",
     "images_data_path": "./test/regression/regression_test004/images",
     "train_data_path": "./test/regression/regression_test004/train_data",
-    "threasold_image_percent_of_pdf": 50,
+    "threshold_image_percent_of_pdf": 50,
     "api_key": null,
     "mathpix_app_id": null,
     "mathpix_app_key": null,

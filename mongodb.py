@@ -26,12 +26,10 @@ def mongodb(args):
     gc.collect()
 
 if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
+    # Clean up buffer memory before starting the program
     gc.collect()
 
+    # Default values for command line arguments
     # Current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -40,10 +38,9 @@ if __name__ == "__main__":
     payload_name = "mongodb_payload.json"
     payload_dir  = os.path.join(current_dir, "test", "regression", test_name, "payload", payload_name)
 
-    # Add options
-    p = argparse.ArgumentParser()
-    p = argparse.ArgumentParser(description="Translate text within an image.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
+    # Set up command line argument parser
+    p = argparse.ArgumentParser(description="MongoDB Connection.")
+    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="Data directory")
     args = p.parse_args()
 
     mongodb(args)

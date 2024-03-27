@@ -23,7 +23,7 @@ def total_process(args):
     
     payload_data = read_json(args.payload_dir)
 
-    # Construct the MongoDB Atlas URI
+    # Extract MongoDB URI from payload data
     mongo_uri = payload_data["mongo_uri"]
 
     # Call class instance
@@ -37,7 +37,7 @@ def total_process(args):
     if is_available:
         print("valid api key")
         # Separate the data 
-        separate_data(payload_data["data_path"], payload_data["threasold_image_percent_of_pdf"])
+        separate_data(payload_data["data_path"], payload_data["threshold_image_percent_of_pdf"])
 
         # pdf to image feature
         pdf2img = Pdf2ImgClass(
@@ -219,7 +219,7 @@ def make_one_result(payload_data, results: [str]):
 
     return chatgpt_response
 
-def separate_data(path, threasold):
+def separate_data(path, threshold):
     source_folder = path
     images_folder = os.path.join(path, "images")
     pdf_folder = os.path.join(path, "pdf")
@@ -238,7 +238,7 @@ def separate_data(path, threasold):
                 #     copy_file_to_folder(file_path, train_folder)
                 # if has_text(file_path):
                 #     copy_file_to_folder(file_path, train_folder)
-                if get_image_pages_percentage(file_path) < threasold:
+                if get_image_pages_percentage(file_path) < threshold:
                     # pdf is mostly consist of text
                     copy_file_to_folder(file_path, train_folder)
                 else:
@@ -246,12 +246,10 @@ def separate_data(path, threasold):
                     copy_file_to_folder(file_path, pdf_folder)
 
 if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
+    # Clean up buffer memory before starting the program
     gc.collect()
 
+    # Default values for command line arguments
     # Current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -263,12 +261,11 @@ if __name__ == "__main__":
     user = "user@gmail.com"
     api_key = "AMEYbpdcmrUxNu_Fb80qutukUZdlsmYiH4g7As5LzNA1"
 
-    # Add options
-    p = argparse.ArgumentParser()
-    p = argparse.ArgumentParser(description="Translate text within an image.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
-    p.add_argument("--user", type=Path, default=user, help="user")
-    p.add_argument("--api_key", type=Path, default=api_key, help="title")
+    # Set up command line argument parser
+    p = argparse.ArgumentParser(description="Total Process.")
+    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="Data directory")
+    p.add_argument("--user", type=Path, default=user, help="User Email")
+    p.add_argument("--api_key", type=Path, default=api_key, help="API key")
     args = p.parse_args()
 
     total_process(args)
