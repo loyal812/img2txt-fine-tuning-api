@@ -17,7 +17,10 @@
     "model_id": "",
     "temperature": 0.3,
     "max_retries": 5,
-    "mongo_uri": null,
+    "mongodb_username": "mongodb_username",
+    "mongodb_password": "mongodb_password",
+    "mongodb_cluster_name": "mongodb_cluster_name",
+    "mongodb_database_name": "",
     "db_name": "oridosai",
     "collection_name": "apis"
 }

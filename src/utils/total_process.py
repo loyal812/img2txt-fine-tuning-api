@@ -22,7 +22,7 @@ from src.utils.utils_funcs import is_image_file, is_pdf_file, is_text_file, copy
 def total_process(args):
     start_time = time.time()
     
-    payload_data = read_json(args.payload_dir)
+    payload_data = read_json(args['payload_dir'])
 
     # Your MongoDB Atlas connection details
     mongodb_username = payload_data["mongodb_username"]
@@ -43,7 +43,7 @@ def total_process(args):
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
 
-    is_available = mongodb.check_validation_api(api_key=str(Path(args.api_key)), user=str(Path(args.user)))
+    is_available = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
 
     if is_available:
         print("valid api key")
@@ -255,31 +255,3 @@ def separate_data(path, threasold):
                 else:
                     # pdf is mostly consist of image
                     copy_file_to_folder(file_path, pdf_folder)
-
-if __name__ == "__main__":
-    """
-    Form command lines
-    """
-    # Clean up buffer memory
-    gc.collect()
-
-    # Current directory
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Payload directory
-    test_name    = "regression_test013"
-    payload_name = "payload.json"
-    payload_dir  = os.path.join(current_dir, "test", "regression", test_name, "payload", payload_name)
-
-    user = "user@gmail.com"
-    api_key = "AMEYbpdcmrUxNu_Fb80qutukUZdlsmYiH4g7As5LzNA1"
-
-    # Add options
-    p = argparse.ArgumentParser()
-    p = argparse.ArgumentParser(description="Translate text within an image.")
-    p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
-    p.add_argument("--user", type=Path, default=user, help="user")
-    p.add_argument("--api_key", type=Path, default=api_key, help="title")
-    args = p.parse_args()
-
-    total_process(args)

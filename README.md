@@ -9,6 +9,7 @@ venv\Scripts\Activate
 MacOS:
 venv\bin\activate
 
+pip uninstall -r requirements.txt -y
 pip install -r requirements.txt
 
 ```
@@ -51,3 +52,35 @@ pip install -r requirements.txt
 
 py main.py
 ```
+
+### Create, Delete, Check API Key
+- Create API Key
+```
+py .\create_api_key.py --payload_dir="payload_dir" --user="user email" --title=[Optional] --description=[Optional]
+
+example:
+py .\create_api_key.py --payload_dir="./test/regression/regression_testxxx/payload/mongodb_payload.json" --user="user@gmail.com" --title="title" --description="description"
+```
+
+- Delete API Key
+```
+py .\delete_api_key.py --payload_dir="payload_dir" --user="user email" --api_key="api key"
+
+example:
+py .\delete_api_key.py --payload_dir="./test/regression/regression_testxxx/payload/mongodb_payload.json" --user="user@gmail.com" --api_key="api_key"
+```
+
+- Check API key
+```
+py .\check_api_key.py --payload_dir="payload_dir" --user="user email" --api_key="api key"
+
+example:
+py .\check_api_key.py --payload_dir="./test/regression/regression_testxxx/payload/mongodb_payload.json" --user="user@gmail.com" --api_key="api_key"
+```
+
+### MongoDB:
+{
+    "mongo_uri": "mongodb+srv://{user_name}:{password}@cluster0.ill5gnu.mongodb.net",
+    "db_name": "oridosai",
+    "collection_name": "apis"
+}
