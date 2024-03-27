@@ -2,9 +2,7 @@
 import os
 import gc
 import time
-import argparse
 from pathlib import Path
-from urllib.parse import quote_plus
 import concurrent.futures
 from datetime import datetime
 import json
@@ -24,18 +22,8 @@ def total_process(args):
     
     payload_data = read_json(args['payload_dir'])
 
-    # Your MongoDB Atlas connection details
-    mongodb_username = payload_data["mongodb_username"]
-    mongodb_password = payload_data["mongodb_password"]
-    mongodb_cluster_name = payload_data["mongodb_cluster_name"]
-    mongodb_database_name = payload_data["mongodb_database_name"]
-
-    # Escape the mongodb_username and mongodb_password
-    mongodb_escaped_username = quote_plus(mongodb_username)
-    mongodb_escaped_password = quote_plus(mongodb_password)
-
     # Construct the MongoDB Atlas URI
-    mongo_uri = f"mongodb+srv://{mongodb_escaped_username}:{mongodb_escaped_password}@{mongodb_cluster_name}.mongodb.net/{mongodb_database_name}"
+    mongo_uri = payload_data["mongo_uri"]
 
     # Call class instance
     mongodb = MongoDBClass(
@@ -45,7 +33,7 @@ def total_process(args):
 
     is_available = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
 
-    if is_available:
+    if is_available['status'] == "success":
         print("valid api key")
         # Separate the data 
         separate_data(payload_data["data_path"], payload_data["threasold_image_percent_of_pdf"])
@@ -148,16 +136,19 @@ def total_process(args):
         fine_tune.jsonl_generation()
 
         # Fine tuning
-        fine_tune.finetune()
+        fine_tuned_model = fine_tune.finetune()
 
         # Write into log file
         end_time = time.time()
         msg = f"Total processing time: {end_time - start_time} seconds"
         print(msg)
+
+        return {"status": "success", "fine_tuned_model": fine_tuned_model}
     else:
         print("invalide api key")
 
-    gc.collect()
+        return {"status": "success", "message": "invalide api key"}
+
 
 def save_to_txt(payload_data, result: str):
     current_time = datetime.now().strftime('%y_%m_%d_%H_%M_%S')

@@ -22,8 +22,8 @@ from src.models.chatting_model import ChattingModel
 
 from utils.total_process import total_process
 from utils.create_api import create_api_key
-from utils.delete_api_key import delete_api_key
-from utils.check_api_key import check_api_key
+from src.utils.delete_api import delete_api_key
+from src.utils.check_api import check_api_key
 from utils.chatting import chatting
 
 # Create a FastAPI application
@@ -88,7 +88,9 @@ async def finetuning(request_body: MainModel):
         'api_key' : api_key
     }
 
-    total_process(args)
+    result = total_process(args)
+
+    return result
 
 
 @app.post("/create_api")
@@ -107,7 +109,9 @@ async def create_api(request_body: CreateAPIModel):
         'description' : request_body.description
     }
 
-    create_api_key(args)
+    result = create_api_key(args)
+
+    return result
 
 
 @app.post("/delete_api")
@@ -130,7 +134,9 @@ async def delete_api(request_body: MainModel):
         'api_key' : api_key
     }
 
-    delete_api_key(args)
+    result = delete_api_key(args)
+
+    return result
 
 
 @app.post("/check_api")
@@ -153,7 +159,9 @@ async def check_api(request_body: MainModel):
         'api_key' : api_key
     }
 
-    check_api_key(args)
+    result = check_api_key(args)
+
+    return result
 
 
 @app.post("/conversation")
@@ -177,4 +185,6 @@ async def conversation(request_body: ChattingModel):
         'question' : request_body.question
     }
 
-    chatting(args)
+    result = chatting(args)
+
+    return result

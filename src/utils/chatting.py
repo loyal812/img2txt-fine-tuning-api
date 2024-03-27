@@ -1,6 +1,5 @@
 import gc
 from pathlib import Path
-from urllib.parse import quote_plus
 
 from src.utils.read_json import read_json
 from src.chatting.ChattingClass import ChattingClass
@@ -14,18 +13,8 @@ def chatting(args):
     # Payload
     payload_data = read_json(args['payload_dir'])
 
-    # Your MongoDB Atlas connection details
-    mongodb_username = payload_data["mongodb_username"]
-    mongodb_password = payload_data["mongodb_password"]
-    mongodb_cluster_name = payload_data["mongodb_cluster_name"]
-    mongodb_database_name = payload_data["mongodb_database_name"]
-
-    # Escape the mongodb_username and mongodb_password
-    mongodb_escaped_username = quote_plus(mongodb_username)
-    mongodb_escaped_password = quote_plus(mongodb_password)
-
     # Construct the MongoDB Atlas URI
-    mongo_uri = f"mongodb+srv://{mongodb_escaped_username}:{mongodb_escaped_password}@{mongodb_cluster_name}.mongodb.net/{mongodb_database_name}"
+    mongo_uri = payload_data["mongo_uri"]
 
     # Call class instance
     mongodb = MongoDBClass(
@@ -46,7 +35,11 @@ def chatting(args):
             
         response = chatting.ask_question(args['question'])
         print(response)
+
+        return {"status": "success", "response": response.response}
     else:
         print("invalide api key")
+
+        return {"status": "success", "fine_tuned_model": "invalide api key"}
 
     gc.collect()

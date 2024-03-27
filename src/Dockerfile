@@ -3,6 +3,7 @@ FROM python:3.11.0 as base
 
 # Define a build argument named PROJECT with a default value of 'api'.
 ARG PROJECT=src
+ARG TEST=test
 
 RUN apt-get update && apt-get install -y \
     poppler-utils
@@ -27,6 +28,7 @@ RUN pip install --upgrade llama-index
 
 # Copy the project files into the container.
 COPY --chown=user:user ./$PROJECT /home/user/$PROJECT
+COPY --chown=user:user ./$TEST /home/user/$TEST
 
 # Copy the .env file into the container.
 COPY --chown=user:user .env /home/user/.env
@@ -48,6 +50,8 @@ RUN pip install --upgrade llama-index
 USER root
 # Copy the project files into the container.
 COPY --chown=user:user ./$PROJECT /home/user/$PROJECT
+COPY --chown=user:user ./$TEST /home/user/$TEST
+
 # Create a directory for mypy cache and change its ownership to the non-root user.
 RUN mkdir /home/user/.mypy_cache && chown user:user -R /home/user/.mypy_cache
 # Install pytest within the test stage
