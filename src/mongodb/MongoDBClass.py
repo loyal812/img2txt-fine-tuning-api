@@ -126,12 +126,12 @@ class MongoDBClass():
             # Check if the insertion was successful
             if result.inserted_id:
                 print("New item has been added to the collection with ID:", result.inserted_id)
-                return True
+                return {"status": "success", "api_key": data['api'], "message": f"New item has been added to the collection with ID: {result.inserted_id}"}
             else:
                 print("Failed to add a new item to the collection")
-                return False
+                return {"status": "failed", "message": "Failed to add a new item to the collection"}
         else:
-            return db 
+            return {"status": "failed", "message": "Failed to add a new item to the collection"}
         
     def delete_api(self, api_key, user):
         # Connect to MongoDB
@@ -149,10 +149,12 @@ class MongoDBClass():
             result = collection.update_one(filter_condition, update_operation)
             if result.modified_count == 1:
                 print("Document updated successfully")
+                return {"status": "success", "message": "Successfully deleted"}
             else:
                 print("No matching document found")
+                return {"status": "failed", "message": "No matching document found"}
         else:
-            return db 
+            return {"status": "failed", "message": "No matching document found"}
         
     def check_validation_api(self, api_key, user):
         # Connect to MongoDB
@@ -168,9 +170,9 @@ class MongoDBClass():
             existing_document = collection.find_one(filter_condition)
             if existing_document:
                 print("Document exists in the collection")
-                return True
+                return {"status": "success", "message": "Document exists in the collection"}
             else:
                 print("Document does not exist in the collection")
-                return False
+                return {"status": "failed", "message": "Document does not exist in the collection"}
         else:
-            return db 
+            return {"status": "failed", "message": "Document does not exist in the collection"}

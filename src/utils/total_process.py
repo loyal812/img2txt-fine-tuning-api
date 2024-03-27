@@ -33,7 +33,7 @@ def total_process(args):
 
     is_available = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
 
-    if is_available:
+    if is_available['status'] == "success":
         print("valid api key")
         # Separate the data 
         separate_data(payload_data["data_path"], payload_data["threasold_image_percent_of_pdf"])
@@ -136,16 +136,19 @@ def total_process(args):
         fine_tune.jsonl_generation()
 
         # Fine tuning
-        fine_tune.finetune()
+        fine_tuned_model = fine_tune.finetune()
 
         # Write into log file
         end_time = time.time()
         msg = f"Total processing time: {end_time - start_time} seconds"
         print(msg)
+
+        return {"status": "success", "fine_tuned_model": fine_tuned_model}
     else:
         print("invalide api key")
 
-    gc.collect()
+        return {"status": "success", "message": "invalide api key"}
+
 
 def save_to_txt(payload_data, result: str):
     current_time = datetime.now().strftime('%y_%m_%d_%H_%M_%S')

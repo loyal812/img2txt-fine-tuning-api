@@ -36,6 +36,8 @@ def create_api_key(args):
         "updated_at": datetime.now(),
     }
 
-    mongodb.create_api(data)
+    result = mongodb.create_api(data)
 
     gc.collect()
+
+    return result

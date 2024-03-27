@@ -35,7 +35,11 @@ def chatting(args):
             
         response = chatting.ask_question(args['question'])
         print(response)
+
+        return {"status": "success", "response": response.response}
     else:
         print("invalide api key")
+
+        return {"status": "success", "fine_tuned_model": "invalide api key"}
 
     gc.collect()
