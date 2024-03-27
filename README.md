@@ -85,6 +85,41 @@ py .\check_api_key.py --payload_dir="./test/regression/regression_testxxx/payloa
     "collection_name": "apis"
 }
 
+### MongoDB Atlas Setting
+- Create Account 
+Sign up with google signup or email.
+
+- Get the environment data
+![Alt text](./images/image-18.png)
+
+![Alt text](./images/image-19.png)
+
+![Alt text](./images/image-20.png)
+
+![Alt text](./images/image-21.png)
+
+![Alt text](./images/image-22.png)
+
+Please save mongodb_username, mongodb_pasword and mongodb_cluster_name to your .env file.
+
+- Update the password
+![Alt text](./images/image-23.png)
+
+![Alt text](./images/image-24.png)
+
+![Alt text](./images/image-25.png)
+
+![Alt text](./images/image-26.png)
+
+Please update mongodb_password to your .env file.
+
+- Create new User
+![Alt text](./images/image-27.png)
+
+![Alt text](./images/image-28.png)
+
+Please save mongodb_username and mongodb_pasword to your .env file.
+
 ### AWS EC2
 
 - Launch Instance
@@ -127,6 +162,7 @@ py .\check_api_key.py --payload_dir="./test/regression/regression_testxxx/payloa
 ![Alt text](./images/image-17.png)
 
 ### Project Setting
+- Set the environment and run the project
 ```
 sudo su
 apt update
@@ -165,57 +201,106 @@ MONGODB_CLUSTER_NAME=
 docker-compose up -d
 ```
 
+- update the project and re-run
+```
+git pull origin dev
+
+docker ps
+
+docker stop container_id
+
+docker rm container_id
+
+docker-compose up -d
+```
+
 ### done 
 host your elastic ip 
 
 http://{your elastic ip}:5000/create_api 
-POST
+- Postman
+![Alt text](./images/image-29.png)
+
+- curl
 ```
-{
+curl -X 'POST' \
+  'http://18.118.73.220:5000/create_api' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
   "user": "",
   "title": "",
   "description": "",
   "data_id": ""
-}
+}'
 ```
 
 http://{your elastic ip}:5000/delete_api 
-POST
+- Postman
+![Alt text](./images/image-30.png)
+
+- curl
 ```
-{
+curl -X 'POST' \
+  'http://18.118.73.220:5000/delete_api' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
   "api_key": "",
   "user": "",
   "data_id": ""
-}
+}'
 ```
 
 http://{your elastic ip}:5000/check_api 
-POST
+- postman
+![Alt text](./images/image-31.png)
+
+- curl
 ```
-{
+curl -X 'POST' \
+  'http://18.118.73.220:5000/check_api' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
   "api_key": "",
   "user": "",
   "data_id": ""
-}
+}'
+
 ```
 
 http://{your elastic ip}:5000/finetuning 
-POST
+- postman
+![Alt text](./images/image-33.png)
+
+- curl
 ```
-{
+curl -X 'POST' \
+  'http://18.118.73.220:5000/finetuning' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
   "api_key": "",
   "user": "",
   "data_id": ""
-}
+}'
 ```
 
 http://{your elastic ip}:5000/conversation 
-POST
+- postman
+![Alt text](./images/image-32.png)
+
+- curl
 ```
-{
+curl -X 'POST' \
+  'http://18.118.73.220:5000/conversation' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
   "api_key": "",
   "user": "",
   "data_id": "",
   "question": "hi"
-}
+}'
 ```
