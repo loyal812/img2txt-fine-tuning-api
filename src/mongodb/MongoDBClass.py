@@ -97,4 +97,24 @@ class MongoDBClass():
         else:
             return db 
         
+    def delete_api(self, api_key, user):
+        # Connect to MongoDB
+        db = self.mongo_connect()
+
+        if db["result"] == True:
+            collection = db['message']
+
+            # Define the filter condition to identify the document to delete
+            filter_condition = {"api": api_key, "user": user}
+            # Define the update operation
+            update_operation = {"$set": { "is_removed": True }}
+
+            # Update a single document that matches the filter condition
+            result = collection.update_one(filter_condition, update_operation)
+            if result.modified_count == 1:
+                print("Document updated successfully")
+            else:
+                print("No matching document found")
+        else:
+            return db 
         
