@@ -118,3 +118,23 @@ class MongoDBClass():
         else:
             return db 
         
+    def check_validation_api(self, api_key, user):
+        # Connect to MongoDB
+        db = self.mongo_connect()
+
+        if db["result"] == True:
+            collection = db['message']
+
+            # Define the filter condition to check for document existence
+            filter_condition = {"api": api_key, "user": user, "is_removed": False}
+
+            # Check if a document exists that matches the filter condition
+            existing_document = collection.find_one(filter_condition)
+            if existing_document:
+                print("Document exists in the collection")
+                return True
+            else:
+                print("Document does not exist in the collection")
+                return False
+        else:
+            return db 
