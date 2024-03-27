@@ -85,24 +85,30 @@ py .\check_api_key.py --payload_dir="./test/regression/regression_testxxx/payloa
     "collection_name": "apis"
 }
 
-### MongoDB Atlas Setting
-- Create Account 
-Sign up with google signup or email.
+## Guide for end-to-end process of fine tuning
+This guide provides step-by-step instructions for setting up a MongoDB Atlas account, connecting to a MongoDB cluster using Compass, and configuring an AWS EC2 instance for your project and running end-to-end if fine tuning using OpenAI.
 
-- Get the environment data
+### Prerequisites
+- MongoDB Atlas account
+- AWS account
+    
+### Step 1: MongoDB Atlas Setup
+- Create MongoDB Atlas Account: [Sign up at MongoDB Atlas]([https://www.google.com](https://www.mongodb.com/atlas/database))
+- Gather Environment Data: After logging in, navigate to the dashboard to find your environment details and deployment details.
 ![Alt text](./images/image-18.png)
 
 ![Alt text](./images/image-19.png)
 
+- Connect to MongoDB Cluster: Use the MongoDB Atlas interface to connect to your MongoDB cluster (Create Database User and choose a connection method).
 ![Alt text](./images/image-20.png)
 
+- Use MongoDB Compass: To connect to your application select Compass for an enhanced GUI experience for exploring and managing your data.
 ![Alt text](./images/image-21.png)
 
+- Securely store your MongoDB username, password, and cluster ID in a `.env` file.
 ![Alt text](./images/image-22.png)
 
-Please save mongodb_username, mongodb_pasword and mongodb_cluster_name to your .env file.
-
-- Update the password
+- Go to the Database Access and update the password by clicking on the Edit button.
 ![Alt text](./images/image-23.png)
 
 ![Alt text](./images/image-24.png)
@@ -111,32 +117,33 @@ Please save mongodb_username, mongodb_pasword and mongodb_cluster_name to your .
 
 ![Alt text](./images/image-26.png)
 
-Please update mongodb_password to your .env file.
-
-- Create new User
+- Use autogenrate secure password button to generate a new password, copy the password, and update it in the `.env` file and click on Add User button.
 ![Alt text](./images/image-27.png)
 
 ![Alt text](./images/image-28.png)
 
-Please save mongodb_username and mongodb_pasword to your .env file.
+The setup for MongoDB atlas is ready.
 
-### AWS EC2
+### Step 2: AWS EC2 Setup
 
-- Launch Instance
+- Launch an EC2 Instance: Log in to your AWS account and create a new EC2 instance.
 ![Alt text](./images/image.png)
 
-- Instance Setting
+Use the following settings for instance setup:
+- Select OS and instance type: Choose Ubuntu as your operating system. Pick the desired instance type based on your needs.
 ![Alt text](./images/image-1.png)
 
+- Generate a new key pair: Generate a new key pair, name it, and save it securely.
 ![Alt text](./images/image-2.png)
 
 ![Alt text](./images/image-3.png)
 
+- Storage Configuration: Configure your instance with the required storage (e.g., 50 GB). Launch the EC2 instance. Make sure to store the genrated key pair file (.pem file).
 ![Alt text](./images/image-4.png)
 
 ![Alt text](./images/image-5.png)
 
-- Elastic IP Setting
+- Elastic IP Setting: Create an Elastic IP by allocating a new Elastic IP address in the AWS dashboard. Then, associate Elastic IP by linking the Elastic IP address to your new EC2 instance.
 ![Alt text](./images/image-7.png)
 
 ![Alt text](./images/image-8.png)
@@ -147,7 +154,7 @@ Please save mongodb_username and mongodb_pasword to your .env file.
 
 ![Alt text](./images/image-11.png)
 
-- Security Group Setting
+- Security Group Setting: Edit the security group settings by modify the inbound rules. Add rules for Custom TCP with a port range of 5000, HTTP, HTTPS, etc.
 ![Alt text](./images/image-12.png)
 
 ![Alt text](./images/image-13.png)
@@ -156,41 +163,56 @@ Please save mongodb_username and mongodb_pasword to your .env file.
 
 ![Alt text](./images/image-15.png)
 
-- Connect to Instance
+- Connect to EC2 Instance: Follow AWS instructions to securely connect to your EC2 instance.
 ![Alt text](./images/image-16.png)
 
 ![Alt text](./images/image-17.png)
 
-### Project Setting
-- Set the environment and run the project
-```
-sudo su
-apt update
 
+
+### Step 3: Environment Setup and Project Execution
+This section guides you through setting up your environment and running the project on an AWS EC2 instance using Docker.
+
+#### Prerequisites
+- AWS EC2 instance running Ubuntu
+- Root or sudo privileges
+
+#### Setup steps
+```bash
+# Gain Root Access
+sudo su
+# Update Package List                   
+apt update 
+
+# Install Required Packages
 apt install apt-transport-https ca-certificates curl software-properties-common
+
+# Add Docker Repository and Install Docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 apt-cache policy docker-ce
 apt install docker-ce
 
-apt install docker-compose
+# Install Docker Compose, Make, and Nginx
+apt install docker-compose make nginx
 
-apt install make
-
-apt install nginx
-
+# Go to /var/www
 cd /var/www
 
+# Clone the GitHub Repository
 git clone https://github.com/oridosai/img2txt-fine-tuning-api.git
 
+# Navigate to the Project Directory
 cd img2txt-fine-tuning-api
 
+# Set Permissions
 chmod -R 777 /var/www/img2txt-fine-tuning-api
 
+# Create and Edit Environment File
 nano .env
 
-Please copy your local env data at this file and save.
-
+# Enter your environment variables here
+# Copy your local env data at this file and save.
 OPENAI_API_KEY=
 MATHPIX_APP_ID=
 MATHPIX_APP_KEY=
@@ -198,24 +220,46 @@ MONGODB_USERNAME=
 MONGODB_PASSWORD=
 MONGODB_CLUSTER_NAME=
 
+# Launch the Application with Docker Compose
 docker-compose up -d
-```
 
-- update the project and re-run
-```
-git pull origin dev
-
-docker ps
-
+# Updating and Re-running the Project
+# Pull Updates from Repository
+git pull origin dev 
+# Check Running Containers        
+docker ps       
+# Stop and Remove the Container             
 docker stop container_id
-
 docker rm container_id
-
-docker-compose up -d
+# Restart the Application
+docker-compose up -d         
 ```
 
 ### done 
 host your elastic ip 
+http://{your elastic ip}:5000/total  
+create_api + finetuning + chatting
+
+```
+py .\script\total_process.py --api_url "api_url" --data_id "regression013" --user "user email" --title "title" --description "description" --question "hi"
+```
+- Postman
+![Alt text](./images/image-34.png)
+
+- curl
+```
+curl -X 'POST' \
+  'http://localhost:5000/total' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "user": "",
+  "title": "",
+  "description": "",
+  "data_id": "",
+  "question": "hi"
+}'
+```
 
 http://{your elastic ip}:5000/create_api 
 ```
