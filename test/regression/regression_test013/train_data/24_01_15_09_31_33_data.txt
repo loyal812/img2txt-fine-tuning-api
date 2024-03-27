@@ -1,0 +1,10 @@
+The images contain scanned handwritten notes discussing the methodology of deriving vector, symmetric, and parametric equations for a line in three-dimensional space. Key details are emphasized through highlights and underlines, with the academic goal of illustrating the process from start to finish.
+
+The notes explain finding a line that passes through distinct points and is parallel to a vector. A step-by-step approach is adopted for deriving equations using both general theory with specific example problems.
+
+In the foremost example, the process begins with identification of a line passing through the exact point (2,4,3) and running parallel to the vector \( \mathbf{i} - 2\mathbf{j} + 5\mathbf{k} \). This information then helps to derive the corresponding vector and parametric equations. A transition is demonstrated from the vector equation to parametric equations, and finally, a symmetric equation is deduced, marked by the elimination of parameter 't'.
+
+The second solution, based on points A(1,3,-2) and B(4,1,5), begins by calculating the direction vector \( \mathbf{v} \) between these two points. Subsequently, the vector, parametric, and symmetric equations for this line are derived.
+
+Diagrams included support understanding of three-dimensional space, and notes confirm they were digitized using the CamScanner app. The images suggest these notes belong to an educational setting, with the intent for learners studying vector calculus or linear algebra.
+
