@@ -158,7 +158,9 @@ Please copy your local env data at this file and save.
 OPENAI_API_KEY=
 MATHPIX_APP_ID=
 MATHPIX_APP_KEY=
-Mongo_URI=
+MONGODB_USERNAME=
+MONGODB_PASSWORD=
+MONGODB_CLUSTER_NAME=
 
 docker-compose up -d
 ```
