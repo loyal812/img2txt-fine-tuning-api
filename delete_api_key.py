@@ -43,7 +43,6 @@ if __name__ == "__main__":
 
     user = "user@gmail.com"
     api_key = "AMEYbpdcmrUxNu_Fb80qutukUZdlsmYiH4g7As5LzNA"
-    description = "description"
 
     # Add options
     p = argparse.ArgumentParser()

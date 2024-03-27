@@ -14,6 +14,7 @@ from src.utils.chatgpt_communicator import ChatGPTCommunicator
 from src.pdf2img.Pdf2ImgClass import Pdf2ImgClass
 from src.finetune.FineTuningClass import FineTuningClass
 from src.mathpix.Mathpix import Mathpix
+from src.mongodb.MongoDBClass import MongoDBClass
 
 from src.utils.utils import is_image_file, is_pdf_file, is_text_file, copy_file_to_folder, get_image_pages_percentage
 
@@ -22,113 +23,126 @@ def main(args):
     
     payload_data = read_json(args.payload_dir)
 
-    # Separate the data 
-    separate_data(payload_data["data_path"], payload_data["threasold_image_percent_of_pdf"])
-
-    # pdf to image feature
-    pdf2img = Pdf2ImgClass(
-        data_path=payload_data["pdf_data_path"],
-        parent_path=payload_data["data_path"])
-    
-    pdf2img.pdf2img()
-
-    # img to text feature
-    # Read images from the image directory
-    image_list = []
-    image_data_path = payload_data["images_data_path"]
-
-    try:
-        image_list = [img for img in os.listdir(image_data_path) if img.endswith(".png") or img.endswith(".jpeg") or img.endswith(".jpg")]
-    except FileNotFoundError:
-        print("The specified path does not exist or is inaccessible.")
-
     # Call class instance
-    img_translator = ImageTranslator(api_key=payload_data["api_key"])
-    mathpix = Mathpix(mathpix_app_id=payload_data["mathpix_app_id"], mathpix_app_key=payload_data["mathpix_app_key"])
-    
-    # Loop over number of images and append all images
-    # NOTE: User can upload image and add image URLs or just upload image or just add image URLs
-    images = []
-    image_paths = []
-    if (len(image_list) > 0) and (len(payload_data["image_url"]) > 0):
-        for image in image_list:
-            image_path = os.path.join(image_data_path, image)
-            # Encode image
-            base64_image = img_translator.encode_image(image_path)
-            images.append((base64_image, False, "auto"))
-            image_paths.append(image_path)
-        for img_url in payload_data["image_url"]:
-            images.append((img_url, True, "auto"))
-            image_paths.append(img_url)
-    elif (len(image_list) > 0) and (len(payload_data["image_url"]) == 0):
-        for image in image_list:
-            image_path = os.path.join(image_data_path, image)
-            # Encode image
-            base64_image = img_translator.encode_image(image_path)
-            images.append((base64_image, False, "auto"))
-            image_paths.append(image_path)
-    elif (len(image_list) == 0) and (len(payload_data["image_url"]) > 0):
-        for img_url in payload_data["image_url"]:
-            images.append((img_url, True, "auto"))
-            image_paths.append(img_url)
+    mongodb = MongoDBClass(
+        db_name=payload_data["db_name"], 
+        collection_name=payload_data["collection_name"], 
+        mongo_uri=payload_data["mongo_uri"])
 
-    if payload_data["is_gpt"]:
-        for image in images:
-            if payload_data["is_parallel"]:
-                params = [{
-                    img_translator: img_translator,
-                    image: image
-                }] * payload_data["parallel_count"]
+    is_available = mongodb.check_validation_api(api_key=str(Path(args.api_key)), user=str(Path(args.user)))
 
-                with concurrent.futures.ThreadPoolExecutor() as executor:
-                    results = list(executor.map(lambda args: img2txt(*args), params))
-                
-                result = make_one_result(payload_data, results)
-            else:
-                result = img2txt(img_translator, image)
+    if is_available:
+        print("valid api key")
+        # Separate the data 
+        separate_data(payload_data["data_path"], payload_data["threasold_image_percent_of_pdf"])
 
-            save_to_txt(payload_data, result)
+        # pdf to image feature
+        pdf2img = Pdf2ImgClass(
+            data_path=payload_data["pdf_data_path"],
+            parent_path=payload_data["data_path"])
+        
+        pdf2img.pdf2img()
+
+        # img to text feature
+        # Read images from the image directory
+        image_list = []
+        image_data_path = payload_data["images_data_path"]
+
+        try:
+            image_list = [img for img in os.listdir(image_data_path) if img.endswith(".png") or img.endswith(".jpeg") or img.endswith(".jpg")]
+        except FileNotFoundError:
+            print("The specified path does not exist or is inaccessible.")
+
+        # Call class instance
+        img_translator = ImageTranslator(api_key=payload_data["api_key"])
+        mathpix = Mathpix(mathpix_app_id=payload_data["mathpix_app_id"], mathpix_app_key=payload_data["mathpix_app_key"])
+        
+        # Loop over number of images and append all images
+        # NOTE: User can upload image and add image URLs or just upload image or just add image URLs
+        images = []
+        image_paths = []
+        if (len(image_list) > 0) and (len(payload_data["image_url"]) > 0):
+            for image in image_list:
+                image_path = os.path.join(image_data_path, image)
+                # Encode image
+                base64_image = img_translator.encode_image(image_path)
+                images.append((base64_image, False, "auto"))
+                image_paths.append(image_path)
+            for img_url in payload_data["image_url"]:
+                images.append((img_url, True, "auto"))
+                image_paths.append(img_url)
+        elif (len(image_list) > 0) and (len(payload_data["image_url"]) == 0):
+            for image in image_list:
+                image_path = os.path.join(image_data_path, image)
+                # Encode image
+                base64_image = img_translator.encode_image(image_path)
+                images.append((base64_image, False, "auto"))
+                image_paths.append(image_path)
+        elif (len(image_list) == 0) and (len(payload_data["image_url"]) > 0):
+            for img_url in payload_data["image_url"]:
+                images.append((img_url, True, "auto"))
+                image_paths.append(img_url)
+
+        if payload_data["is_gpt"]:
+            for image in images:
+                if payload_data["is_parallel"]:
+                    params = [{
+                        img_translator: img_translator,
+                        image: image
+                    }] * payload_data["parallel_count"]
+
+                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                        results = list(executor.map(lambda args: img2txt(*args), params))
+                    
+                    result = make_one_result(payload_data, results)
+                else:
+                    result = img2txt(img_translator, image)
+
+                save_to_txt(payload_data, result)
+        else:
+            for path in image_paths:
+                result = mathpix.latex({
+                    'src': mathpix.image_uri(path),
+                    'ocr': ['math', 'text'],
+                    'formats': ['text', 'latex_styled', 'asciimath', 'mathml', 'latex_simplified'],
+                    'format_options': {
+                        'text': {
+                            'transforms': ['rm_spaces', 'rm_newlines'],
+                            'math_delims': ['$', '$']
+                        },
+                        'latex_styled': {'transforms': ['rm_spaces']}
+                    }
+                })
+
+                # print(json.loads(json.dumps(result, indent=4, sort_keys=True))["text"])
+
+                save_to_txt(payload_data, json.loads(json.dumps(result, indent=4, sort_keys=True))["text"])
+
+        # fine tuning
+        fine_tune = FineTuningClass(
+            data_path=payload_data["train_data_path"],
+            parent_path=payload_data["data_path"],
+            api_key=payload_data["api_key"],
+            model=payload_data["model"],
+            temperature=payload_data["temperature"],
+            max_retries=payload_data["max_retries"])
+        
+        # Generate the train and eval data
+        fine_tune.train_generation()
+
+        # Generate the jsonl
+        fine_tune.jsonl_generation()
+
+        # Fine tuning
+        fine_tune.finetune()
+
+        # Write into log file
+        end_time = time.time()
+        msg = f"Total processing time: {end_time - start_time} seconds"
+        print(msg)
     else:
-        for path in image_paths:
-            result = mathpix.latex({
-                'src': mathpix.image_uri(path),
-                'ocr': ['math', 'text'],
-                'formats': ['text', 'latex_styled', 'asciimath', 'mathml', 'latex_simplified'],
-                'format_options': {
-                    'text': {
-                        'transforms': ['rm_spaces', 'rm_newlines'],
-                        'math_delims': ['$', '$']
-                    },
-                    'latex_styled': {'transforms': ['rm_spaces']}
-                }
-            })
+        print("invalide api key")
 
-            # print(json.loads(json.dumps(result, indent=4, sort_keys=True))["text"])
-
-            save_to_txt(payload_data, json.loads(json.dumps(result, indent=4, sort_keys=True))["text"])
-
-    # fine tuning
-    fine_tune = FineTuningClass(
-        data_path=payload_data["train_data_path"],
-        parent_path=payload_data["data_path"],
-        api_key=payload_data["api_key"],
-        model=payload_data["model"],
-        temperature=payload_data["temperature"],
-        max_retries=payload_data["max_retries"])
-    
-    # Generate the train and eval data
-    fine_tune.train_generation()
-
-    # Generate the jsonl
-    fine_tune.jsonl_generation()
-
-    # Fine tuning
-    fine_tune.finetune()
-
-    # Write into log file
-    end_time = time.time()
-    msg = f"Total processing time: {end_time - start_time} seconds"
-    print(msg)
     gc.collect()
 
 def save_to_txt(payload_data, result: str):
@@ -243,10 +257,15 @@ if __name__ == "__main__":
     payload_name = "payload.json"
     payload_dir  = os.path.join(current_dir, "test", "regression", test_name, "payload", payload_name)
 
+    user = "user@gmail.com"
+    api_key = "AMEYbpdcmrUxNu_Fb80qutukUZdlsmYiH4g7As5LzNA1"
+
     # Add options
     p = argparse.ArgumentParser()
     p = argparse.ArgumentParser(description="Translate text within an image.")
     p.add_argument("--payload_dir", type=Path, default=payload_dir, help="payload directory to the test example")
+    p.add_argument("--user", type=Path, default=user, help="user")
+    p.add_argument("--api_key", type=Path, default=api_key, help="title")
     args = p.parse_args()
 
     main(args)
