@@ -22,3 +22,5 @@ docx2txt
 cryptography
 poppler-utils
 PyMuPDF
+pyjwt
+pymongo
