@@ -1,0 +1,5 @@
+{
+    "mongo_uri": null,
+    "db_name": "oridosai",
+    "collection_name": "apis"
+}
