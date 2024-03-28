@@ -11,6 +11,8 @@ venv\bin\activate
 
 pip uninstall -r requirements.txt -y
 pip install -r requirements.txt
+git pull --all
+git merge --strategy=recursive --strategy-option=ours --no-ff origin/dev
 
 ```
 
