@@ -3,7 +3,7 @@ from pathlib import Path
 
 from src.utils.read_json import read_json
 from src.chatting.cl_chat_bot import ChatBot
-from src.mongodb.cl_mongodb import MongoDB
+from src.api_access.cl_api_access import ApiAccess
 
 def chatting(args):
     """
@@ -19,13 +19,13 @@ def chatting(args):
     mongo_uri = payload_data["mongo_uri"]
 
     # Create an instance of MongoDB connection
-    mongodb = MongoDB(
+    apiAccess = ApiAccess(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
 
     # Check if the API key is valid using MongoDB
-    is_available = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
+    is_available = apiAccess.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
 
     if is_available:
         print("valid api key")

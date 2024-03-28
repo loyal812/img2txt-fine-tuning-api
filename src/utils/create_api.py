@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime
 
 from src.utils.read_json import read_json
-from src.mongodb.cl_mongodb import MongoDB
+from src.api_access.cl_api_access import ApiAccess
 from src.utils.utils_funcs import generate_api_key
 from src.models.api_model import APIModel
 
@@ -21,7 +21,7 @@ def create_api_key(args):
     mongo_uri = payload_data["mongo_uri"]
 
     # Create an instance of MongoDB connection
-    mongodb = MongoDB(
+    apiAccess = ApiAccess(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
@@ -41,7 +41,7 @@ def create_api_key(args):
     }
 
     # Create the API key in the MongoDB database
-    result = mongodb.create_api(data)
+    result = apiAccess.create_api(data)
 
     # Perform garbage collection to free up memory
     gc.collect()

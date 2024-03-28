@@ -2,7 +2,7 @@ import gc
 from pathlib import Path
 
 from src.utils.read_json import read_json
-from src.mongodb.cl_mongodb import MongoDB
+from src.api_access.cl_api_access import ApiAccess
 
 
 def check_api_key(args):
@@ -19,13 +19,13 @@ def check_api_key(args):
     mongo_uri = payload_data["mongo_uri"]
 
     # Create an instance of MongoDB connection
-    mongodb = MongoDB(
+    apiAccess = ApiAccess(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
 
     # Check the validation of the API key using MongoDB
-    result = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
+    result = apiAccess.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
 
     # Perform garbage collection to free up memory
     gc.collect()

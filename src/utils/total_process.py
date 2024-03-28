@@ -13,7 +13,7 @@ from src.utils.chatgpt_communicator import ChatGPTCommunicator
 from src.pdf2img.cl_pdf_to_image import Pdf2Img
 from src.finetune.cl_fine_tuning import FineTuning
 from src.mathpix.cl_mathpix import Mathpix
-from src.mongodb.cl_mongodb import MongoDB
+from src.api_access.cl_api_access import ApiAccess
 
 from src.utils.utils_funcs import is_image_file, is_pdf_file, is_text_file, copy_file_to_folder, get_image_pages_percentage
 
@@ -26,12 +26,12 @@ def total_process(args):
     mongo_uri = payload_data["mongo_uri"]
 
     # Call class instance
-    mongodb = MongoDB(
+    apiAccess = ApiAccess(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
 
-    is_available = mongodb.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
+    is_available = apiAccess.check_validation_api(api_key=str(Path(args['api_key'])), user=str(Path(args['user'])))
 
     if is_available['status'] == "success":
         print("valid api key")
