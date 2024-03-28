@@ -26,4 +26,4 @@ poppler-utils
 PyMuPDF
 pyjwt
 pymongo
-pydantic==1.10
+pydantic==1.10.10
