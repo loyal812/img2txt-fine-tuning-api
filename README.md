@@ -243,7 +243,7 @@ http://{your elastic ip}:5000/total
 create_api + finetuning + chatting
 
 ```
-py .\script\total_process.py --api_url "api_url" --data_id "regression013" --user "user email" --title "title" --description "description" --question "hi"
+py .\script\process.py --step "all" --api_url "api_url" --data_id "regression013" --user "user email" --title "title" --description "description" --question "hi"
 ```
 - Postman
 ![Alt text](./images/image-34.png)
@@ -265,7 +265,7 @@ curl -X 'POST' \
 
 http://{your elastic ip}:5000/create_api 
 ```
-py .\script\create_api_key.py --api_url "api_url" --data_id "regression013" --user "user email" --title "title" --description "description"
+py .\script\process.py --step "create_api" --api_url "api_url" --data_id "regression013" --user "user email" --title "title" --description "description"
 ```
 - Postman
 ![Alt text](./images/image-29.png)
@@ -286,7 +286,7 @@ curl -X 'POST' \
 
 http://{your elastic ip}:5000/delete_api 
 ```
-py .\script\delete_api_key.py --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key"
+py .\script\process.py --step "delete_api" --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key"
 ```
 - Postman
 ![Alt text](./images/image-30.png)
@@ -306,7 +306,7 @@ curl -X 'POST' \
 
 http://{your elastic ip}:5000/check_api 
 ```
-py .\script\check_api_key.py --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key"
+py .\script\process.py --step "check_api" --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key"
 ```
 - postman
 ![Alt text](./images/image-31.png)
@@ -327,7 +327,7 @@ curl -X 'POST' \
 
 http://{your elastic ip}:5000/finetuning 
 ```
-py .\script\finetuning.py --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key"
+py .\script\process.py --step "finetuning" --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key"
 ```
 - postman
 ![Alt text](./images/image-33.png)
@@ -347,7 +347,7 @@ curl -X 'POST' \
 
 http://{your elastic ip}:5000/conversation 
 ```
-py .\script\conversation.py --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key" --question "hi"
+py .\script\process.py --step "chatting" --api_url "api_url" --data_id "regression013" --user "user email" --api_key "api key" --question "hi"
 ```
 - postman
 ![Alt text](./images/image-32.png)
