@@ -2,8 +2,8 @@ import gc
 from pathlib import Path
 
 from src.utils.read_json import read_json
-from src.chatting.ChattingClass import ChattingClass
-from src.mongodb.MongoDBClass import MongoDBClass
+from src.chatting.cl_chat_bot import ChatBot
+from src.mongodb.cl_mongodb import MongoDB
 
 def chatting(args):
     """
@@ -19,7 +19,7 @@ def chatting(args):
     mongo_uri = payload_data["mongo_uri"]
 
     # Create an instance of MongoDB connection
-    mongodb = MongoDBClass(
+    mongodb = MongoDB(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
@@ -29,14 +29,14 @@ def chatting(args):
 
     if is_available:
         print("valid api key")
-        # Create an instance of ChattingClass
-        chatting = ChattingClass(
+        # Create an instance of ChatBot
+        chatting = ChatBot(
             data_path=payload_data["data_path"],
             api_key=payload_data["api_key"],
             model_id=payload_data["model_id"],
             temperature=payload_data["temperature"])
 
-        # Ask a question using the ChattingClass instance   
+        # Ask a question using the ChatBot instance   
         response = chatting.ask_question(args['question'])
         print(response)
     

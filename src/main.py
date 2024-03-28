@@ -59,7 +59,7 @@ async def root():
     return RedirectResponse(app.docs_url)
 
 # Function to get the payload directory
-def get_payload_dir(data_id: str):
+def __get_payload_dir(data_id: str):
     """Get the directory path for the payload file."""
     payload_name = "payload.json"
     if data_id == "":
@@ -73,7 +73,7 @@ def get_payload_dir(data_id: str):
 
 @app.post("/total")
 async def total(request_body: MainModel):
-    payload_dir  = get_payload_dir(request_body.data_id)
+    payload_dir  = __get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
         user = "user@gmail.com"
@@ -121,7 +121,7 @@ async def total(request_body: MainModel):
 
 @app.post("/finetuning")
 async def finetuning(request_body: BasicModel):
-    payload_dir  = get_payload_dir(request_body.data_id)
+    payload_dir  = __get_payload_dir(request_body.data_id)
 
     if request_body.user == "":
         user = "user@gmail.com"
@@ -146,7 +146,7 @@ async def finetuning(request_body: BasicModel):
 
 @app.post("/create_api")
 async def create_api(request_body: CreateAPIModel):
-    payload_dir  = get_payload_dir(request_body.data_id)
+    payload_dir  = __get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
         user = "user@gmail.com"
@@ -167,7 +167,7 @@ async def create_api(request_body: CreateAPIModel):
 
 @app.post("/delete_api")
 async def delete_api(request_body: BasicModel):
-    payload_dir  = get_payload_dir(request_body.data_id)
+    payload_dir  = __get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
         user = "user@gmail.com"
@@ -192,7 +192,7 @@ async def delete_api(request_body: BasicModel):
 
 @app.post("/check_api")
 async def check_api(request_body: BasicModel):
-    payload_dir  = get_payload_dir(request_body.data_id)
+    payload_dir  = __get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
         user = "user@gmail.com"
@@ -217,7 +217,7 @@ async def check_api(request_body: BasicModel):
 
 @app.post("/conversation")
 async def conversation(request_body: ChattingModel):
-    payload_dir  = get_payload_dir(request_body.data_id)
+    payload_dir  = __get_payload_dir(request_body.data_id)
     
     if request_body.user == "":
         user = "user@gmail.com"

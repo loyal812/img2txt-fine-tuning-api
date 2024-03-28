@@ -10,10 +10,10 @@ import json
 from src.utils.read_json import read_json
 from src.utils.image_translator import ImageTranslator
 from src.utils.chatgpt_communicator import ChatGPTCommunicator
-from src.pdf2img.Pdf2ImgClass import Pdf2ImgClass
-from src.finetune.FineTuningClass import FineTuningClass
-from src.mathpix.Mathpix import Mathpix
-from src.mongodb.MongoDBClass import MongoDBClass
+from src.pdf2img.cl_pdf_to_image import Pdf2Img
+from src.finetune.cl_fine_tuning import FineTuning
+from src.mathpix.cl_mathpix import Mathpix
+from src.mongodb.cl_mongodb import MongoDB
 
 from src.utils.utils_funcs import is_image_file, is_pdf_file, is_text_file, copy_file_to_folder, get_image_pages_percentage
 
@@ -26,7 +26,7 @@ def total_process(args):
     mongo_uri = payload_data["mongo_uri"]
 
     # Call class instance
-    mongodb = MongoDBClass(
+    mongodb = MongoDB(
         db_name=payload_data["db_name"], 
         collection_name=payload_data["collection_name"], 
         mongo_uri=mongo_uri)
@@ -39,7 +39,7 @@ def total_process(args):
         separate_data(payload_data["data_path"], payload_data["threshold_image_percent_of_pdf"])
 
         # pdf to image feature
-        pdf2img = Pdf2ImgClass(
+        pdf2img = Pdf2Img(
             data_path=payload_data["pdf_data_path"],
             parent_path=payload_data["data_path"])
         
@@ -121,7 +121,7 @@ def total_process(args):
                 save_to_txt(payload_data, json.loads(json.dumps(result, indent=4, sort_keys=True))["text"])
 
         # fine tuning
-        fine_tune = FineTuningClass(
+        fine_tune = FineTuning(
             data_path=payload_data["train_data_path"],
             parent_path=payload_data["data_path"],
             api_key=payload_data["api_key"],
