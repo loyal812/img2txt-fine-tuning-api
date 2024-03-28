@@ -6,11 +6,11 @@ import time
 import json
 from itertools import cycle
 
-from llama_index import SimpleDirectoryReader, ServiceContext, VectorStoreIndex
-from llama_index.llms import OpenAI
-from llama_index.evaluation import DatasetGenerator
-from llama_index.callbacks import OpenAIFineTuningHandler
-from llama_index.callbacks import CallbackManager
+from llama_index.core import SimpleDirectoryReader, ServiceContext, VectorStoreIndex, Settings
+from llama_index.llms.openai import OpenAI
+from llama_index.core.evaluation import DatasetGenerator
+from llama_index.finetuning.callbacks import OpenAIFineTuningHandler
+from llama_index.core.callbacks import CallbackManager
 
 from datasets import Dataset
 from ragas import evaluate
