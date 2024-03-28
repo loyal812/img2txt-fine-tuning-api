@@ -15,9 +15,9 @@ class Mathpix:
         """
         self.mathpix_app_id = mathpix_app_id
         self.mathpix_app_key = mathpix_app_key
-        self.set_config(mathpix_app_id, mathpix_app_key)
+        self.__set_config(mathpix_app_id, mathpix_app_key)
 
-    def set_config(self, mathpix_app_id, mathpix_app_key):
+    def __set_config(self, mathpix_app_id, mathpix_app_key):
         """
         Set Mathpix app ID and app key in the environment variables.
 

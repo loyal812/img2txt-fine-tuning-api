@@ -4,9 +4,9 @@ import pathlib
 import shutil
 import os
 
-class Pdf2ImgClass:
+class Pdf2Img:
     def __init__(self, data_path, parent_path):
-        """Initialize Pdf2ImgClass with data and parent paths.
+        """Initialize Pdf2Img with data and parent paths.
 
         Args:
         - data_path (str): The path where the PDF files are located.
@@ -15,7 +15,7 @@ class Pdf2ImgClass:
         self.data_path = data_path
         self.parent_path = parent_path
 
-    def get_poppler_path(self):
+    def __get_poppler_path(self):
         """Retrieve the path to the directory containing pdftoppm executable.
 
         Returns:
@@ -27,7 +27,7 @@ class Pdf2ImgClass:
         else:
             return None
         
-    def get_pdf_list(self):
+    def __get_pdf_list(self):
         """Retrieve the list of PDF files in the data directory.
 
         Returns:
@@ -49,14 +49,14 @@ class Pdf2ImgClass:
 
     def pdf2img(self):
         """Convert each PDF file in the list to a series of images."""
-        pdf_list = self.get_pdf_list()
+        pdf_list = self.__get_pdf_list()
 
         for index, pdf_path in enumerate(pdf_list):
             current_time = datetime.now().strftime('%y_%m_%d_%H_%M_%S')
             result_path = os.path.join(self.parent_path, "images")
             os.makedirs(result_path, exist_ok=True)  # This line will create the directory if it doesn't exist
 
-            poppler_path = self.get_poppler_path()
+            poppler_path = self.__get_poppler_path()
             print("poppler_path", poppler_path)
 
             try:

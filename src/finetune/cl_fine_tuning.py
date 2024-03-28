@@ -18,9 +18,9 @@ from ragas.metrics import answer_relevancy, faithfulness
 
 from dotenv import load_dotenv
 
-class FineTuningClass:
+class FineTuning:
     def __init__(self, data_path, parent_path, api_key="", model='gpt-3.5-turbo', temperature=0.3, max_retries=5):
-        """Initialize the FineTuningClass.
+        """Initialize the FineTuning.
 
         Args:
         - data_path (str): The path to the data for fine-tuning.
@@ -38,7 +38,7 @@ class FineTuningClass:
         self.retry_delay = 60
         self.__set_api_key(api_key)
         self.__set_document(data_path)
-        self.generate_subfolder(parent_path)
+        self.__generate_subfolder(parent_path)
 
     def __set_api_key(self, api_key=None):
         """
@@ -85,7 +85,7 @@ class FineTuningClass:
             logging.error(f"An error occurred while loading data from '{data_path}': {e}")
             raise
 
-    def generate_subfolder(self, parent_path):
+    def __generate_subfolder(self, parent_path):
         """Generate a subfolder for storing generated data.
 
         Args:
