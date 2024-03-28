@@ -44,7 +44,7 @@ def chatting(args):
         gc.collect()
         
         # Return the result
-        return {"status": "success", "response": response.response}
+        return {"status": "success", "api_key": args["api_key"], "response": response.response}
     else:
         print("invalide api key")
 
