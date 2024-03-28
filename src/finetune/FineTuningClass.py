@@ -1,4 +1,5 @@
 import os
+import logging
 import openai
 import random
 import time
@@ -18,7 +19,7 @@ from ragas.metrics import answer_relevancy, faithfulness
 from dotenv import load_dotenv
 
 class FineTuningClass:
-    def __init__(self, data_path, parent_path, api_key='', model='gpt-3.5-turbo', temperature=0.3, max_retries=5):
+    def __init__(self, data_path, parent_path, api_key="", model='gpt-3.5-turbo', temperature=0.3, max_retries=5):
         """Initialize the FineTuningClass.
 
         Args:
@@ -35,43 +36,54 @@ class FineTuningClass:
         self.temperature = temperature
         self.max_retries = max_retries
         self.retry_delay = 60
-        self.set_api_key(api_key)
-        self.set_document(data_path)
+        self.__set_api_key(api_key)
+        self.__set_document(data_path)
         self.generate_subfolder(parent_path)
 
-    def set_api_key(self, api_key):
-        if api_key:
+    def __set_api_key(self, api_key=None):
+        """
+        Set the OpenAI API key for authorization.
+
+        Args:
+        - api_key (str, optional): OpenAI API key. Default is None.
+        """
+        # If api_key is provided and not empty
+        if api_key and api_key.strip():
             self.api_key = api_key
         else:
+            # Load API key from environment variables
             load_dotenv()
             self.api_key = os.getenv("OPENAI_API_KEY")
 
-        if self.api_key is not None:
-            os.environ["OPENAI_API_KEY"] = self.api_key
-            openai.api_key = self.api_key
-            return True
-        else:
-            # Handle the absence of the environment variable
-            # You might want to log an error, raise an exception, or provide a default value
-            # For example, setting a default value
-            os.environ["OPENAI_API_KEY"] = "your_default_api_key"
-            openai.api_key = "openai_api_key"
-            return False
+            # If API key is not found in the environment variables, handle the situation
+            if not self.api_key:
+                # Here, you can log an error, raise an exception, or provide further instructions
+                raise ValueError("OpenAI API key is not provided and not found in environment variables.")
 
-
-    def set_document(self, data_path):
-        """Load documents from the specified data directory.
+        # Set the OpenAI API key in the environment and OpenAI library
+        os.environ["OPENAI_API_KEY"] = self.api_key
+        openai.api_key = self.api_key
+        return True
+    
+    
+    def __set_document(self, data_path):
+        """
+        Load documents from the specified data directory.
 
         Args:
-        - data_path (str): Path to the data directory.
+        - data_path (str): Path to the input data directory.
+
+        Raises:
+        - FileNotFoundError: If the specified data path does not exist or is inaccessible.
         """
         try:
             self.documents = SimpleDirectoryReader(data_path).load_data()
-        except Exception:
-            # Handle the case when the data_path does not exist
-            print(f"The specified data path '{data_path}' does not exist or is inaccessible.")
-            exit()
-
+        except FileNotFoundError as e:
+            logging.error(f"The specified data path '{data_path}' does not exist or is inaccessible: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"An error occurred while loading data from '{data_path}': {e}")
+            raise
 
     def generate_subfolder(self, parent_path):
         """Generate a subfolder for storing generated data.
