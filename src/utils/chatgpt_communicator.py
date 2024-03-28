@@ -4,8 +4,6 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
-client = OpenAI()
-
 
 class ChatGPTCommunicator:
     """
@@ -23,6 +21,7 @@ class ChatGPTCommunicator:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.language_model = language_model
         self.messages = [{"role": "system", "content": "You are a helpful assistant."}]
+        self.client = OpenAI(api_key=self.api_key)
 
 
     def create_chat(self, initial_message):
@@ -62,7 +61,7 @@ class ChatGPTCommunicator:
             raise ValueError("Chat not initialized. Call create_chat() first.")
             
         try:
-            response = client.chat.completions.create(model=self.language_model,
+            response = self.client.chat.completions.create(model=self.language_model,
                                                     messages=self.messages)
             # Directly accessing the content of the message from the response
             if response.choices and hasattr(response.choices[0].message, 'content'):
