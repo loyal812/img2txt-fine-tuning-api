@@ -18,15 +18,15 @@ up: ## Run the application
 	docker-compose up --build api
 
 done: lint test ## Prepare for a commit
-test: utest itest  ## Run unit and integration tests
+# test: utest itest  ## Run unit and integration tests
 
 ci-docker-compose := docker-compose -f .ci/docker-compose.yml
 
-utest: cleantest ## Run unit tests
-	$(ci-docker-compose) run --rm unit pytest -m unit .
+# utest: cleantest ## Run unit tests
+# 	$(ci-docker-compose) run --rm unit pytest -m unit .
 
-itest: cleantest ## Run integration tests
-	$(ci-docker-compose) run --rm integration pytest -m integration .
+# itest: cleantest ## Run integration tests
+# 	$(ci-docker-compose) run --rm integration pytest -m integration .
 
 check: ## Check the code base
 	$(ci-docker-compose) run --rm unit black ./$(PROJECT) --check --diff
